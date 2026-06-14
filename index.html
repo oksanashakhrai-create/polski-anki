@@ -5,18 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Polski">
+<meta name="apple-mobile-web-app-title" content="Flashcards">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f0f1a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Polski Flashcards</title>
+<title>Flashcards</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--accent:#e94560;--accent2:#0f3460;--green:#00b894;--orange:#fdcb6e;--red:#e17055;--text:#eee;--text2:#aaa;--shadow:0 8px 32px rgba(0,0,0,.4)}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-.app{max-width:600px;margin:0 auto;padding:16px;min-height:100vh;display:flex;flex-direction:column}
-.header{text-align:center;padding:20px 0 10px}
+.app{max-width:600px;margin:0 auto;padding:16px;padding-top:env(safe-area-inset-top, 20px);min-height:100vh;display:flex;flex-direction:column}
+.lang-toggle{display:flex;gap:8px;justify-content:center;margin-bottom:8px;margin-top:4px}
+.lang-btn{padding:8px 18px;border:2px solid var(--card2);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;font-size:.85em;font-weight:600;transition:.2s}
+.lang-btn:hover{border-color:var(--accent)}
+.lang-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.18)}
+.header{text-align:center;padding:10px 0 6px}
 .header h1{font-size:1.6em;background:linear-gradient(135deg,#e94560,#0f3460);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
 .header .sub{color:var(--text2);font-size:.85em}
 .stats-bar{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
@@ -35,8 +39,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .dir-btn{padding:6px 14px;border:2px solid var(--card2);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;font-size:.75em;transition:.2s}
 .dir-btn:hover{border-color:var(--accent)}
 .dir-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.15)}
-.card-container{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px;min-height:320px;margin:8px 0}
-.flashcard{width:100%;max-width:500px;min-height:300px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
+.card-container{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px;min-height:280px;margin:8px 0}
+.flashcard{width:100%;max-width:500px;min-height:260px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
 .flashcard.flipped{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 .card-front{background:linear-gradient(145deg,#1a1a2e,#16213e);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.05)}
@@ -48,7 +52,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .card-example{font-size:.85em;color:var(--text2);margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);line-height:1.5;max-width:100%}
 .card-example strong{color:var(--text);font-weight:500}
 .tap-hint{position:absolute;bottom:16px;font-size:.7em;color:var(--text2);opacity:.5}
-.bottom-bar{display:flex;gap:10px;margin:16px 0 8px;justify-content:center;align-items:center;flex-wrap:wrap}
+.bottom-bar{display:flex;gap:10px;margin:8px 0 4px;justify-content:center;align-items:center;flex-wrap:wrap}
 .ans-btn{padding:10px 20px;border:none;border-radius:12px;font-size:.82em;font-weight:600;cursor:pointer;transition:.2s;min-width:90px}
 .ans-btn:active{transform:scale(.95)}
 .ans-btn.again{background:var(--red);color:#fff}
@@ -84,14 +88,15 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .session-done p{color:var(--text2);margin-bottom:20px}
 .restart-btn{padding:12px 32px;border:none;border-radius:12px;background:var(--accent);color:#fff;font-size:1em;font-weight:600;cursor:pointer;transition:.2s}
 .restart-btn:hover{opacity:.9;transform:scale(1.02)}
-.kbd-hints{text-align:center;font-size:.65em;color:var(--text2);opacity:.4;margin-top:8px}
+.kbd-hints{text-align:center;font-size:.65em;color:var(--text2);opacity:.4;margin-top:4px}
 .kbd{background:var(--card);padding:2px 6px;border-radius:4px;font-family:monospace}
 @media(max-width:480px){
   .card-word{font-size:1.3em}
-  .app{padding:10px}
+  .app{padding:10px;padding-top:env(safe-area-inset-top, 20px)}
   .stat{min-width:60px;padding:8px}
   .stat .num{font-size:1.1em}
   .ans-btn{padding:8px 14px;font-size:.75em;min-width:70px}
+  .kbd-hints{display:none}
 }
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{animation:fadeIn .3s ease}
@@ -100,7 +105,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <body>
 <div class="app" id="app"></div>
 <script>
-const CARDS_RAW = [
+// ============ POLISH CARDS ============
+const CARDS_PL = [
 ["Na pozór","На первый взгляд, с виду","Nowy interfejs programu wydawał się na pozór skomplikowany, ale szybko się do niego przyzwyczaiłam.","Новый интерфейс программы казался на первый взгляд сложным, но я быстро к нему привыкла."],
 ["Mieć niewiele wspólnego z...","Иметь мало общего с...","Moja praca ma niewiele wspólnego z tym, co studiowałam na uczelni.","Моя работа имеет мало общего с тем, что я изучала в университете."],
 ["Sięgnąć po coś","Потянуться за чем-то, обратиться к чему-то","Sięgnęłam po telefon, żeby sprawdzić powiadomienia.","Я потянулась за телефоном, чтобы проверить уведомления."],
@@ -238,6 +244,7 @@ const CARDS_RAW = [
 ["Akurat","Именно / как раз","Akurat dzisiaj nie mam czasu — może jutro?","Именно сегодня у меня нет времени — может, завтра?"],
 ["Przecież","Ведь / же","Przecież mówiłam ci, żebyś wziął klucze!","Я ведь тебе говорила, чтобы ты взял ключи!"],
 ["Chociaż","Хотя / несмотря на то что","Chociaż pada deszcz, idę na spacer — potrzebuję świeżego powietrza.","Хотя идёт дождь, иду на прогулку — мне нужен свежий воздух."],
+["Zresztą (слowo)","Впрочем / к тому же / да и вообще","Nie chcę tam iść, zresztą i tak nie mam czasu.","Я не хочу туда идти, к тому же у меня всё равно нет времени."],
 ["W sam raz","Как раз / в самый раз","Te buty są w sam raz — ani za ciasne, ani za luźne.","Эти туфли в самый раз — ни тесные, ни свободные."],
 ["Ponieważ","Так как / поскольку / потому что","Ponieważ jest zimno, założyłam kurtkę i szalik.","Так как холодно, я надела куртку и шарф."],
 ["Natomiast","А / же / напротив","Ja piję kawę, mój brat natomiast woli herbatę.","Я пью кофе, мой брат же предпочитает чай."],
@@ -249,24 +256,260 @@ const CARDS_RAW = [
 ["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно."],
 ];
 
-const cards = CARDS_RAW.map((c, i) => ({
-  id: i, pl: c[0], ru: c[1], exPl: c[2], exRu: c[3],
-}));
+// ============ ENGLISH CARDS ============
+// [en, ru, exEn, exRu, category]
+const CARDS_EN = [
+// === Перевод ===
+["The other day","На днях","I saw your friend the other day at the coffee shop.","Я видела твою подругу на днях в кофейне.","Перевод"],
+["I'm just looking around / I'm just browsing","Я только смотрю","I'm just browsing, thanks. I'll let you know if I need help.","Я просто смотрю, спасибо. Я дам знать, если мне нужна помощь.","Перевод"],
+["I expect him to come / I expect that he will come","Я ожидаю, что он придёт","I expect that he will come. I expect him to come.","Я ожидаю, что он придёт (факт). Я ожидаю от него, что он придёт.","Перевод"],
+["It makes me feel confused","Это приводит меня в замешательство","This new software makes me feel confused every time I use it.","Это новое ПО приводит меня в замешательство каждый раз, когда я им пользуюсь.","Перевод"],
+["Don't get me wrong","Не пойми меня неправильно","Don't get me wrong, I like the idea, but it needs more work.","Не пойми меня неправильно, мне нравится идея, но над ней нужно ещё поработать.","Перевод"],
+["More often than not","Чаще всего / в большинстве случаев","More often than not, the simplest solution is the best one.","Чаще всего самое простое решение — лучшее.","Перевод"],
+["You see what I'm getting at here?","Понимаешь, к чему я клоню?","You see what I'm getting at? We need to change the strategy.","Понимаешь, к чему я клоню? Нам нужно менять стратегию.","Перевод"],
+["Your English is going along all right","С твоим английским всё идёт хорошо","Your English is going along all right, you just need more practice.","С твоим английским всё идёт хорошо, тебе просто нужно больше практики.","Перевод"],
+["You don't even have to think about this","Вам даже не нужно об этом думать","You don't even have to think about this, it works automatically.","Вам даже не нужно об этом думать, это работает автоматически.","Перевод"],
+["I'm left with...","В итоге у меня получилось / осталось","I'm left with a great result after all the effort.","В итоге у меня получился отличный результат после всех усилий.","Перевод"],
+["Establish","Основывать / Устанавливать (факт)","Scientists have established a link between stress and heart disease.","Учёные установили связь между стрессом и болезнями сердца.","Перевод"],
+["Knickknacks","Безделушки, сувениры","Her shelves are full of knickknacks from different countries.","Её полки полны безделушек из разных стран.","Перевод"],
+["Learning English is something I will be focusing on this year","Изучение английского — это то, на чём я буду фокусироваться","Learning English is something I will be focusing on this year.","Изучение английского — это то, на чём я буду фокусироваться в этом году.","Перевод"],
+["To get hung up on something","Зациклиться на чём-то","Don't get hung up on small details. People get so hung up on the gear.","Не зацикливайся на мелочах. Люди так зацикливаются на оборудовании.","Перевод"],
+["Stakes are high","Ставки высоки","The stakes are high in this negotiation, so be prepared.","Ставки высоки в этих переговорах, так что будь готов.","Перевод"],
+["The brain picks up on signals","Мозг считывает/улавливает сигналы","The brain picks up on signals that we're not even aware of.","Мозг считывает сигналы, которые мы даже не осознаём.","Перевод"],
+["Intentionally controlling","Намеренный (сознательный) контроль","She was intentionally controlling her breathing to stay calm.","Она намеренно контролировала дыхание, чтобы сохранять спокойствие.","Перевод"],
+["To carry weight","Иметь вес, иметь значение","His opinion carries a lot of weight in this company.","Его мнение имеет большой вес в этой компании.","Перевод"],
+["To take it a step too far","Зайти слишком далеко","I like his jokes, but this time he took it a step too far.","Мне нравятся его шутки, но в этот раз он зашел слишком далеко.","Перевод"],
+["To keep an eye on","Присматривать за / следить за","Can you keep an eye on my bag while I go to the toilet?","Можешь присмотреть за моей сумкой, пока я схожу в туалет?","Перевод"],
+["How far is it true?","Насколько это правда?","You say you're fine, but how far is it true?","Ты говоришь, что всё хорошо, но насколько это правда?","Перевод"],
+["To juggle","Жонглировать / совмещать","It's hard to juggle work and family responsibilities.","Трудно совмещать работу и семейные обязанности.","Перевод"],
+["To pick up on","Усваивать / улавливать","Children pick up on languages much faster than adults.","Дети усваивают языки гораздо быстрее взрослых.","Перевод"],
+["To put your mind to","Сосредоточиться / настроиться на","You can learn anything if you put your mind to it.","Ты можешь выучить что угодно, если по-настоящему настроишься.","Перевод"],
+["I found this to be","Я нахожу это / Я считаю, что это","I found the feature to be very helpful for my workflow.","Я нашла эту функцию очень полезной для моей работы.","Перевод"],
+["There is no harm in + -ing","Нет ничего страшного, чтобы...","There is no harm in testing it before you commit.","Нет ничего страшного в том, чтобы протестировать это перед тем, как решиться.","Перевод"],
+["To wrap up","Подводить итог / Заканчивать","Wrapping up, I'd like to thank everyone for their attention.","В завершение я хотела бы поблагодарить всех за внимание.","Перевод"],
+["What does it stand for?","Что это означает? / обозначает?","The letters 'DIY' — what does it stand for?","Буквы 'DIY' — что они означают?","Перевод"],
+["Scroll (through)","Пролистывать / перелистывать","I like to scroll through my feed on Instagram before bed.","Я люблю пролистывать ленту в Instagram перед сном.","Перевод"],
+["Whatever it takes","Чего бы это ни стоило / любой ценой","I will finish this project whatever it takes.","Я закончу этот проект чего бы это ни стоило.","Перевод"],
+["Have something figured out","Продумать / разобраться с чем-то","You do NOT need to have everything figured out.","Вам не нужно иметь всё продуманным заранее.","Перевод"],
+["Same as usual","Как обычно","How was your day? Oh, same as usual.","Как прошёл день? А, как обычно.","Перевод"],
+["To pull this off","Успешно справиться / провернуть что-то","I can't believe we managed to pull this off!","Не могу поверить, что мы это провернули!","Перевод"],
+["Blown away","Сильно впечатлён / поражён / в восторге","I was blown away by the results of the campaign.","Я была поражена результатами кампании.","Перевод"],
+["Set the stage","Подготовить почву / создать условия","Clear instructions set the stage for high-quality output.","Чёткие инструкции создают основу для качественного результата.","Перевод"],
+["Make it (to something)","Успеть / попасть вовремя","I didn't make it to the airport on time.","Я не успела в аэропорт вовремя.","Перевод"],
+["Be in time (for something)","Успеть по времени","I wasn't in time for the flight.","Я не успела на рейс.","Перевод"],
+["Catch (transport)","Успеть на транспорт","I didn't catch my flight because of the traffic.","Я не успела на самолёт из-за пробок.","Перевод"],
+["I'm running late","Я опаздываю","I'm running late — can you start without me?","Я опаздываю — можете начинать без меня?","Перевод"],
+["To go on a trip","Отправиться в поездку","We want to go on a trip to the mountains next summer.","Мы хотим отправиться в поездку в горы следующим летом.","Перевод"],
+["I'm shattered","Я вымотался / без сил","After working for ten hours, I'm completely shattered.","После десяти часов работы я совершенно без сил.","Перевод"],
+["Not pleased with","Недоволен чем-то","My boss was not pleased with my report and asked me to rewrite it.","Мой босс был недоволен отчётом и попросил переписать его.","Перевод"],
+["Steps aside / step to the side","Отойти в сторону / шагнуть в сторону","Could you step to the side, please? I need to get through.","Не могли бы вы отойти в сторону? Мне нужно пройти.","Перевод"],
+["To let someone through","Пропустить кого-то (пройти)","The corridor was narrow, but I let the old woman through.","Коридор был узким, но я пропустила пожилую женщину.","Перевод"],
+["To let someone in","Впустить кого-то (внутрь)","My friend forgot her keys, so I let her in.","Подруга забыла ключи, и я впустила её.","Перевод"],
+["To get out of","Выбраться из / выйти из","She got out of the car quickly. How do you get out of difficult situations?","Она быстро вышла из машины. Как ты выбираешься из сложных ситуаций?","Перевод"],
+["To turn someone down","Отказать кому-то / отвергнуть","She turned him down when he asked her out on a date.","Она отказала ему, когда он пригласил её на свидание.","Перевод"],
+["Screw up my life","Портит мне жизнь","Stop letting negative thoughts screw up your life.","Перестань позволять негативным мыслям портить тебе жизнь.","Перевод"],
+["Peacock","Выпендрёжник / пижон","He's such a peacock — always showing off his new clothes.","Он такой пижон — вечно хвастается новой одеждой.","Перевод"],
+["You seem to + verb","Похоже, ты... / Кажется, что ты...","You seem to enjoy this kind of work a lot.","Похоже, тебе очень нравится такая работа.","Перевод"],
+["Soaking","Насквозь, до нитки (мокрый)","I got caught in the rain and I'm soaking wet now.","Я попала под дождь и теперь насквозь мокрая.","Перевод"],
+["Let's bounce","Сваливаем / Погнали отсюда","This party is boring. Let's bounce!","Эта вечеринка скучная. Сваливаем!","Перевод"],
+["I'm scared of getting expelled","Я боюсь, что меня отчислят","I'm scared of getting expelled if I fail this exam.","Я боюсь, что меня отчислят, если я провалю экзамен.","Перевод"],
+["Are you catching my drift?","Улавливаешь, к чему я клоню?","We need to cut costs. Are you catching my drift?","Нам нужно сократить расходы. Улавливаешь, к чему я клоню?","Перевод"],
+["Screw you!","Пошёл ты! Отвали!","He said something rude and I told him: screw you!","Он сказал что-то грубое, и я ответила: пошёл ты!","Перевод"],
+["Take your time","Не торопись / Не спеши","Take your time, there's no rush at all.","Не торопись, совершенно никакой спешки.","Перевод"],
+// === Video ===
+["B-roll","Перебивочные кадры, дополнительное видео","This B-roll makes the vlog feel much more cinematic.","Эти перебивочные кадры делают влог гораздо более кинематографичным.","Video"],
+["Cinematic shot","Кинематографичный кадр","That slow-motion shot looks really cinematic.","Этот кадр в замедленном движении выглядит очень кинематографично.","Video"],
+["Top-down shot","Съёмка сверху","Top-down shots are perfect for desk setups and food.","Съёмка сверху идеально подходит для рабочих столов и еды.","Video"],
+["High-up shot","Кадр, снятый с большой высоты","We got a really nice high-up shot of the city skyline.","Мы сделали отличный кадр города с высоты.","Video"],
+["Tracking shot","Кадр с движением камеры за объектом","A tracking shot makes walking scenes more dynamic.","Кадр с движением камеры делает сцены ходьбы более динамичными.","Video"],
+["Pullback shot","Отъезд камеры назад","She used a pullback shot to reveal the entire scene.","Она использовала отъезд камеры, чтобы показать всю сцену.","Video"],
+["Handheld","Съёмка с рук","Some scenes feel more natural when shot handheld.","Некоторые сцены выглядят более естественно при съёмке с рук.","Video"],
+["Stand out","Выделяться","These angles really help your videos stand out from others.","Эти ракурсы действительно помогают твоим видео выделяться.","Video"],
+["Unique perspective","Уникальный ракурс","A unique perspective can change the whole mood of a video.","Уникальный ракурс может изменить всё настроение видео.","Video"],
+["Foreground / background","Передний / задний план","Keep the foreground sharp and the background blurry.","Держи передний план чётким, а задний — размытым.","Video"],
+["Minimalist gear","Минимальный набор оборудования","You don't need expensive gear to start making videos.","Не нужно дорогое оборудование, чтобы начать снимать.","Video"],
+["Extend my tripod / adjust the base","Выдвинуть штатив / отрегулировать основу","Extend the tripod as tall as you can and adjust the base.","Выдвини штатив на максимум и отрегулируй основу.","Video"],
+["Lock the focus (AF lock)","Зафиксировать фокус","Lock the focus so it doesn't shift during the shot.","Зафиксируй фокус, чтобы он не сбивался во время съёмки.","Video"],
+["In focus / blurry","В фокусе / размытый","The notebook is in focus, but her face is blurry.","Блокнот в фокусе, но её лицо размыто.","Video"],
+["Add depth","Добавить глубину","Using objects in front of the camera adds depth to the shot.","Предметы перед камерой добавляют кадру глубину.","Video"],
+["Attach camera to the tripod","Прикрепить камеру к штативу","First, attach the camera to the tripod securely.","Сначала надёжно прикрепи камеру к штативу.","Video"],
+["Flip the camera","Переключить камеру / Перевернуть","Flip the camera to switch between front and rear view.","Переключи камеру, чтобы сменить фронтальную на заднюю.","Video"],
+["Tilt lock mode","Режим блокировки наклона","Use tilt lock mode to keep the camera steady.","Используй режим блокировки наклона, чтобы камера была стабильной.","Video"],
+["Adjust the settings","Настроить параметры","Tap on this arrow to adjust the settings.","Нажми на эту стрелку, чтобы настроить параметры.","Video"],
+["The gimbal has 10 hours of battery life","У стабилизатора 10 часов работы от батареи","The gimbal has 10 hours of battery life and can charge your phone.","У стабилизатора 10 часов работы, и он может заряжать телефон.","Video"],
+["Plug it in and charge up your phone on the go","Подключить и подзарядить телефон на ходу","You can plug it in and charge up your phone while you're on the go.","Ты можешь подключить и подзаряжать телефон, пока ты в пути.","Video"],
+["The video will be uploaded tomorrow","Видео будет загружено завтра","The video will be uploaded tomorrow after final edits.","Видео будет загружено завтра после финального монтажа.","Video"],
+["Tap and hold","Нажать и удерживать","Tap and hold on the screen to lock the exposure.","Нажми и удерживай экран, чтобы зафиксировать экспозицию.","Video"],
+["To shoot and edit professional photos","Снимать и обрабатывать профессиональные фото","We will be incorporating shooting and editing professional photos.","Мы будем внедрять съёмку и обработку профессиональных фотографий.","Video"],
+["Lift the shadows in post / recover blown out highlights","Вытянуть тени при обработке / восстановить пересветы","It's easier to lift shadows in post than recover blown out highlights.","Проще вытянуть тени при обработке, чем восстановить пересвеченные участки.","Video"],
+["I am on a shoot","Я на съёмке","Sorry, I can't talk right now — I'm on a shoot.","Извини, не могу говорить — я на съёмке.","Video"],
+["The low shutter speed caused the photo to look blurry","Низкая выдержка сделала фото размытым","The low shutter speed caused the photo to look blurry.","Низкая выдержка стала причиной того, что фото выглядит размытым.","Video"],
+["Headroom","Запас над головой (пространство в кадре)","Leave enough headroom so the frame looks balanced.","Оставь достаточно пространства над головой, чтобы кадр выглядел сбалансированно.","Video"],
+["Outdoors","На улице, на открытом воздухе","We decided to shoot outdoors because the weather was perfect.","Мы решили снимать на улице, потому что погода была идеальной.","Video"],
+["Squint","Щуриться","She had to squint because the sun was so bright.","Ей пришлось щуриться, потому что солнце было очень ярким.","Video"],
+["The bigger the light source, the softer the light","Чем больше источник света, тем мягче освещение","The bigger the light source, the softer and more flattering the light.","Чем больше источник света, тем мягче и выигрышнее освещение.","Video"],
+["Use the sun as backlight rather than frontal light","Используй солнце как контровый свет, а не фронтальный","Use the sun as backlight rather than frontal light for more flattering portraits.","Используй солнце как контровый свет для более выигрышных портретов.","Video"],
+["Rim light / Hair light","Контурный свет / свет на волосы","A rim light separates the subject from the background.","Контурный свет отделяет модель от фона.","Video"],
+["The subject blends in with the background","Объект сливается с фоном","Without rim light, the subject blends in with the background.","Без контурного света объект сливается с фоном.","Video"],
+["A rim light to separate your subject from the background","Контурный свет, чтобы отделить модель от фона","Fundamentally you want a rim light to separate your subject.","В основе своей вам нужен контурный свет, чтобы отделить модель.","Video"],
+["Out of focus","Вне фокуса","The background should be slightly out of focus for portraits.","Фон должен быть слегка вне фокуса для портретов.","Video"],
+["Subject moves ever so slightly, the focus gets thrown off","Объект чуть сдвинется — фокус сбивается","If the subject moves ever so slightly, the focus gets thrown off.","Если объект сдвинется хотя бы чуть-чуть, фокус сбивается.","Video"],
+["You have to put in thousands of reps of practice","Нужно сделать тысячи повторений на практике","You have to put in thousands of reps of practice to get good.","Нужно сделать тысячи повторений на практике, чтобы стать хорошим.","Video"],
+["Take up (time/space)","Занимать / отнимать (время, место)","This project takes up too much time in my schedule.","Этот проект отнимает слишком много времени.","Video"],
+["Obsolete","Устаревший, вышедший из употребления","This software is obsolete and no longer supported.","Это ПО устарело и больше не поддерживается.","Video"],
+["Edit / edits","Монтаж / правки / смонтированное видео","I'll send you the final edit today after lunch.","Я пришлю финальный монтаж сегодня после обеда.","Video"],
+["I do incredible edits for brands and creators","Я делаю крутой монтаж для брендов и креаторов","I do incredible edits for brands and creators worldwide.","Я делаю крутой монтаж для брендов и креаторов по всему миру.","Video"],
+["Just moving a few sliders","Просто двигая ползунки","Color grading is easy — you're just moving a few sliders.","Цветокоррекция — это просто: двигаешь несколько ползунков.","Video"],
+["Chop up (the footage)","Нарезать (отснятый материал)","Chop up the footage and arrange it on the timeline.","Нарежь отснятый материал и расположи его на таймлайне.","Video"],
+["To bleep out","Запикать / заменить звуковым сигналом","The editor bleeps out bad language in TV shows.","Редактор запикивает нецензурную лексику в телешоу.","Video"],
+["Hit and miss","Иногда работает, иногда нет","AI tools can be hit and miss with complex tasks.","ИИ-инструменты работают не всегда стабильно со сложными задачами.","Video"],
+["Filler words","Слова-паразиты","Try to reduce filler words like 'um' and 'like' in your speech.","Старайся уменьшить количество слов-паразитов вроде 'э-э' в речи.","Video"],
+["Set aside (time)","Выделить / отложить (время)","Set aside 90 minutes to follow along with this tutorial.","Выделите 90 минут, чтобы следовать за этим уроком.","Video"],
+["Walk through (something)","Пошагово пройти / разобрать","We'll walk through building your project step by step.","Мы пошагово разберём, как создать ваш проект.","Video"],
+["Tailored to (your workflow)","Адаптированный под (ваш процесс)","Everything is tailored to your specific workflow.","Всё адаптировано под ваш конкретный рабочий процесс.","Video"],
+["Figure out the intent","Определить намерение / понять, что нужно","The AI will figure out the intent from whatever you provide.","ИИ определит намерение из того, что вы предоставите.","Video"],
+["Hook up (a server/service)","Подключить (сервер / сервис)","Learn how to hook up an MCP server to your project.","Узнайте, как подключить MCP-сервер к вашему проекту.","Video"],
+["Hold the left mouse button, drag it, release","Зажми кнопку мыши, перетащи и отпусти","Hold the left mouse button, drag it, and then release.","Зажми левую кнопку мыши, перетащи и затем отпусти.","Video"],
+// === Вождение ===
+["Sorry, I'm in a bit of a hurry","Я немного спешу / тороплюсь","Sorry, I'm in a bit of a hurry — can we talk later?","Извини, я немного спешу — можем поговорить позже?","Вождение"],
+["I put the car in drive / in reverse","Я включаю драйв / задний ход","I put the car in drive and slowly pulled out of the parking spot.","Я включила драйв и медленно выехала с парковочного места.","Вождение"],
+["She backed out of the driveway slowly","Она медленно выехала задним ходом","She backed out of the driveway slowly, checking the mirrors.","Она медленно выехала задним ходом, проверяя зеркала.","Вождение"],
+["Can you back up a little?","Можешь немного отъехать назад?","Can you back up a little? I can't open my door.","Можешь немного сдать назад? Я не могу открыть дверь.","Вождение"],
+["Driveway","Подъездная дорожка (к дому)","Don't park in the driveway, use the garage instead.","Не паркуйся на подъездной дорожке, лучше используй гараж.","Вождение"],
+["Steering wheel","Руль","Keep both hands on the steering wheel while driving.","Держи обе руки на руле во время вождения.","Вождение"],
+["Look at my speedometer","Посмотри на спидометр","Look at my speedometer — I'm going exactly the speed limit.","Посмотри на спидометр — я еду ровно по ограничению.","Вождение"],
+["To keep an eye on (driving)","Следить за...","Keep an eye on the road signs, we might miss the exit.","Следи за дорожными знаками, мы можем пропустить выезд.","Вождение"],
+["To ignite","Зажигать","Turn the key to ignite the engine.","Поверни ключ, чтобы завести двигатель.","Вождение"],
+["Ignition","Зажигание","Put the key in the ignition and turn it clockwise.","Вставь ключ в зажигание и поверни по часовой стрелке.","Вождение"],
+["Gas pedal","Педаль газа","Gently press the gas pedal to accelerate.","Мягко нажми на педаль газа, чтобы ускориться.","Вождение"],
+["To mistake","Путать","She mistook the gas pedal for the brake.","Она перепутала педаль газа с тормозом.","Вождение"],
+["She mistook the pedals","Она перепутала педали","She mistook the pedals and hit the car in front.","Она перепутала педали и врезалась в машину впереди.","Вождение"],
+["Her car was damaged","Её машина была повреждена","Her car was damaged in the parking lot accident.","Её машина была повреждена в аварии на парковке.","Вождение"],
+["No people were injured/hurt","Никто не пострадал","Luckily, no people were injured in the accident.","К счастью, никто не пострадал в аварии.","Вождение"],
+["To switch/change gears","Переключать скорости","You need to switch gears smoothly on a manual car.","Нужно плавно переключать скорости на механике.","Вождение"],
+["Handbrake","Ручной тормоз","Always engage the handbrake when parking on a hill.","Всегда ставь ручной тормоз при парковке на склоне.","Вождение"],
+["Slope","Уклон","Be careful on this slope — the road is steep.","Будь осторожен на этом уклоне — дорога крутая.","Вождение"],
+["Seat belt","Ремень безопасности","Fasten your seat belt before starting the car.","Пристегни ремень безопасности перед поездкой.","Вождение"],
+["To fine someone","Оштрафовать кого-либо","The police will fine you for speeding in this zone.","Полиция оштрафует тебя за превышение в этой зоне.","Вождение"],
+["To fasten","Закреплять, застёгивать","Please fasten your seat belt during takeoff.","Пожалуйста, пристегните ремень безопасности при взлёте.","Вождение"],
+["Dashboard","Панель управления (приборная)","Check the dashboard for any warning lights.","Проверь приборную панель на наличие предупреждающих сигналов.","Вождение"],
+["What make is your car?","Какой марки машина?","What make is your car? It's a Toyota Camry.","Какой марки твоя машина? Это Toyota Camry.","Вождение"],
+["To release / to let go","Отпускать, освобождать","Slowly release the clutch while pressing the gas.","Медленно отпускай сцепление, нажимая на газ.","Вождение"],
+["To release the clutch","Отпустить сцепление","Release the clutch gradually to avoid stalling.","Отпускай сцепление постепенно, чтобы не заглохнуть.","Вождение"],
+["Blinker / turn signal","Поворотник","Don't forget to turn on your blinker before turning.","Не забудь включить поворотник перед поворотом.","Вождение"],
+["Liver / Lever","Печень / Рычаг","'Liver' is an organ, 'lever' is a mechanical handle.","'Liver' — это орган, 'lever' — это рычаг.","Вождение"],
+["Dipped-beam","Ближний свет","Switch to dipped-beam when there's oncoming traffic.","Переключи на ближний свет, когда есть встречный транспорт.","Вождение"],
+["Main beam","Дальний свет","Use the main beam only when no other cars are around.","Включай дальний свет только когда рядом нет других машин.","Вождение"],
+["To blind","Ослеплять, слепить","The bright headlights blinded me for a second.","Яркие фары ослепили меня на секунду.","Вождение"],
+["Licence plate","Номерной знак","Can you read the licence plate of that car ahead?","Можешь прочитать номерной знак той машины впереди?","Вождение"],
+["Exhaust pipe / exhaust fumes","Выхлопная труба / выхлопы","The exhaust fumes from the truck were terrible.","Выхлопы от грузовика были ужасные.","Вождение"],
+["Gas tank","Бензобак","The gas tank is almost empty — we need to refuel.","Бензобак почти пуст — нужно заправиться.","Вождение"],
+["Windshield","Лобовое стекло","A small rock cracked my windshield on the highway.","Маленький камень повредил моё лобовое стекло на шоссе.","Вождение"],
+["Hood","Капот (передний)","Open the hood so we can check the engine oil.","Открой капот, чтобы мы проверили масло в двигателе.","Вождение"],
+["Headlights","Передние фары","Turn on your headlights, it's getting dark.","Включи фары, темнеет.","Вождение"],
+["Rear bumper","Задний бампер","Someone scratched the rear bumper of my car.","Кто-то поцарапал задний бампер моей машины.","Вождение"],
+["Trunk","Багажник","Put the groceries in the trunk, please.","Положи продукты в багажник, пожалуйста.","Вождение"],
+["To wipe / Windshield wiper","Вытирать / Дворник","Turn on the windshield wipers — it's starting to rain.","Включи дворники — начинается дождь.","Вождение"],
+["Rear mirror","Зеркало заднего вида","Check your rear mirror before changing lanes.","Проверь зеркало заднего вида перед перестроением.","Вождение"],
+["Flat tyre","Спущенное колесо","I had a flat tyre on the way to work this morning.","У меня спустило колесо по пути на работу сегодня утром.","Вождение"],
+["Dent","Вмятина","There's a small dent on the driver's side door.","На водительской двери небольшая вмятина.","Вождение"],
+["To hit (hit-hit-hit)","Ударять, стукнуть","He hit my car while parking and drove away.","Он ударил мою машину при парковке и уехал.","Вождение"],
+["Overheating","Перегрев","The engine was overheating because of the coolant leak.","Двигатель перегрелся из-за утечки охлаждающей жидкости.","Вождение"],
+["Dead battery","Разрядился аккумулятор","My car won't start — I think it's a dead battery.","Машина не заводится — думаю, сел аккумулятор.","Вождение"],
+["Leak / Fluid","Утечка / Жидкость","There's a fluid leak under the car — check the engine.","Под машиной утечка жидкости — проверь двигатель.","Вождение"],
+["Hard on your brake pedal","Резко выжать тормоз","Don't press too hard on your brake pedal on ice.","Не нажимай слишком резко на тормоз на льду.","Вождение"],
+["A scratch","Царапина","I noticed a scratch on the passenger door after shopping.","Я заметила царапину на пассажирской двери после магазина.","Вождение"],
+["Car parts / worn-out","Запчасти / изношенный","The worn-out car parts need to be replaced soon.","Изношенные запчасти нужно скоро заменить.","Вождение"],
+["To clarify / I would like to clarify","Уточнять / хочу уточнить","I would like to clarify something about the insurance claim.","Хочу уточнить кое-что по страховому случаю.","Вождение"],
+["A rough road","Плохая дорога","The rough road damaged my suspension last week.","Плохая дорога повредила мою подвеску на прошлой неделе.","Вождение"],
+["To wear out","Изнашивать","Rough roads will wear out your tyres much faster.","Плохие дороги изнашивают шины гораздо быстрее.","Вождение"],
+["Damp","Влажный","The roads are damp after the morning rain.","Дороги влажные после утреннего дождя.","Вождение"],
+["Spare wheel","Запасное колесо","Always keep a spare wheel in the trunk just in case.","Всегда держи запасное колесо в багажнике на всякий случай.","Вождение"],
+["Gears / gear box","Скорости / коробка передач","This car has a six-speed gear box with smooth shifts.","У этой машины шестиступенчатая коробка передач с плавным переключением.","Вождение"],
+["Tail lights","Задние огни, габариты","One of your tail lights is broken — you should fix it.","Один из твоих задних огней разбит — нужно починить.","Вождение"],
+["To slow down","Притормаживать","Slow down when you see a school zone sign.","Притормози, когда увидишь знак школьной зоны.","Вождение"],
+["To turn out to be","Оказаться...","The noise turned out to be a loose exhaust pipe.","Шум оказался ослабленной выхлопной трубой.","Вождение"],
+["Flooded / section of a road","Затопленный / участок дороги","A flooded section of the road forced us to take a detour.","Затопленный участок дороги заставил нас ехать в объезд.","Вождение"],
+["Brakes / brake pedal / clutch pedal","Тормоза / педаль тормоза / педаль сцепления","Press the brake pedal and the clutch pedal at the same time.","Нажми педаль тормоза и педаль сцепления одновременно.","Вождение"],
+["Severe","Свирепый, жёсткий","Severe weather conditions can make driving dangerous.","Суровые погодные условия делают вождение опасным.","Вождение"],
+// === Фразы связки ===
+["Let me clarify","Позвольте мне пояснить / уточнить","Let me clarify — I didn't mean it that way at all.","Позвольте уточнить — я совсем не это имел в виду.","Фразы связки"],
+["That way","Таким образом / благодаря этому","Save your file often. That way, you won't lose your work.","Сохраняй файл чаще. Таким образом, ты не потеряешь работу.","Фразы связки"],
+["As well / So that","Тоже / Для того чтобы","I'm coming as well. Do it carefully so that nothing breaks.","Я тоже приду. Делай аккуратно, чтобы ничего не сломать.","Фразы связки"],
+["Unless","Если только не","Unless you plan ahead, you'll run out of time.","Если ты не спланируешь заранее, времени не хватит.","Фразы связки"],
+["But the point is","Но суть в том / главное вот что","But the point is: be creative with your approach.","Но суть в том: проявляй творческий подход.","Фразы связки"],
+["It comes down to","Всё сводится к / главное — это","Editing faster comes down to having a good workflow.","Быстрый монтаж сводится к хорошему рабочему процессу.","Фразы связки"],
+["It really all comes down to","Всё в итоге сводится к","It all comes down to your habits and daily routine.","Всё сводится к твоим привычкам и распорядку дня.","Фразы связки"],
+["In fact","Фактически / на самом деле","He seems young, but in fact, he is over 50 years old.","Он кажется молодым, но на самом деле ему за 50.","Фразы связки"],
+["Essentially / in fact","По сути / в сущности / фактически","Essentially, we need to start over from scratch.","По сути, нам нужно начать всё сначала.","Фразы связки"],
+["Basically","По сути / в целом","Basically, you just need to follow three simple steps.","По сути, нужно просто следовать трём простым шагам.","Фразы связки"],
+["Actually","На самом деле / вообще-то","Actually, I don't work here — I'm just waiting for a friend.","Вообще-то, я тут не работаю — просто жду друга.","Фразы связки"],
+["It doesn't make a difference to me","Для меня это не имеет значения","You can choose either option; it doesn't make a difference to me.","Можешь выбрать любой вариант; для меня это не имеет значения.","Фразы связки"],
+["By the way","Кстати","By the way, have you seen the email about tomorrow's meeting?","Кстати, ты видел письмо о завтрашнем совещании?","Фразы связки"],
+["Well / I feel like / To tell the truth / Honestly","Ну / Мне кажется / Честно говоря","Well, I feel like we should wait a bit longer.","Ну, мне кажется, нам стоит подождать ещё немного.","Фразы связки"],
+["It turns out","Оказывается","It turns out that we went to the same school but never met.","Оказывается, мы ходили в одну школу, но никогда не встречались.","Фразы связки"],
+// === Тонкости перевода ===
+["Actual vs. Актуальный","Actual = реальный, фактический (НЕ актуальный)","The actual cost was much higher than the estimate.","Фактическая стоимость оказалась намного выше оценки.","Тонкости перевода"],
+// === ФРАЗОВЫЕ ГЛАГОЛЫ ===
+["To take over","Захватывать, брать под контроль","AI is taking over many repetitive tasks in business.","ИИ берёт на себя многие рутинные задачи в бизнесе.","ФРАЗОВЫЕ ГЛАГОЛЫ"],
+];
 
-const LS_KEY = 'polski_anki_v3';
-function loadProgress() { try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch { return {}; } }
-function saveProgress(p) { localStorage.setItem(LS_KEY, JSON.stringify(p)); }
+// ============ APP LOGIC ============
+const LANGS = {
+  pl: {
+    key: 'polski_anki_v3',
+    cards: CARDS_PL.map((c,i) => ({id:i, w1:c[0], w2:c[1], ex1:c[2], ex2:c[3]})),
+    title: 'Polski Flashcards',
+    flag: '\u{1F1F5}\u{1F1F1}',
+    label: 'Polski',
+    l1: 'PL', l2: 'RU',
+    dir1label: 'RU → PL', dir2label: 'PL → RU',
+    dir1hint: 'Переведи на польский',
+    dir2hint: 'Переведи на русский',
+    sub: c => c+' fraz i słów do nauki',
+  },
+  en: {
+    key: 'english_anki_v1',
+    cards: CARDS_EN.map((c,i) => ({id:i, w1:c[0], w2:c[1], ex1:c[2], ex2:c[3], cat:c[4]})),
+    title: 'English Flashcards',
+    flag: '\u{1F1EC}\u{1F1E7}',
+    label: 'English',
+    l1: 'EN', l2: 'RU',
+    dir1label: 'RU → EN', dir2label: 'EN → RU',
+    dir1hint: 'Переведи на английский',
+    dir2hint: 'Переведи на русский',
+    sub: c => c+' phrases to learn',
+  }
+};
 
-let progress = loadProgress();
+let currentLang = localStorage.getItem('flashcards_lang') || 'pl';
+let progress = {};
 let currentMode = 'study';
-let currentDir = 'ru_pl';
+let currentDir = 'dir1'; // dir1=RU->target, dir2=target->RU
 let deck = [];
 let deckIdx = 0;
 let flipped = false;
-let sessionStats = { total: 0, good: 0, hard: 0, again: 0, skipped: 0 };
+let sessionStats = {total:0, good:0, hard:0, again:0, skipped:0};
 let quizAnswer = null;
 let searchQuery = '';
 let filterStatus = 'all';
+
+function L() { return LANGS[currentLang]; }
+function cards() { return L().cards; }
+
+function loadProgress() { try { return JSON.parse(localStorage.getItem(L().key)) || {}; } catch { return {}; } }
+function saveProgress(p) { localStorage.setItem(L().key, JSON.stringify(p)); }
+
+function switchLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('flashcards_lang', lang);
+  progress = loadProgress();
+  buildDeck();
+  quizAnswer = null;
+  searchQuery = '';
+  filterStatus = 'all';
+  render();
+}
 
 function getStatus(id) {
   const p = progress[id];
@@ -276,37 +519,45 @@ function getStatus(id) {
 }
 function getStats() {
   let n=0,l=0,k=0;
-  cards.forEach(c => { const s=getStatus(c.id); if(s==='new')n++;else if(s==='learning')l++;else k++; });
-  return {new:n,learning:l,known:k,total:cards.length};
+  cards().forEach(c => { const s=getStatus(c.id); if(s==='new')n++;else if(s==='learning')l++;else k++; });
+  return {new:n,learning:l,known:k,total:cards().length};
 }
 function shuffle(arr) {
   const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a;
 }
 function buildDeck() {
-  const nw=cards.filter(c=>getStatus(c.id)==='new');
-  const lr=cards.filter(c=>getStatus(c.id)==='learning');
-  const kn=cards.filter(c=>getStatus(c.id)==='known');
+  const cc = cards();
+  const nw=cc.filter(c=>getStatus(c.id)==='new');
+  const lr=cc.filter(c=>getStatus(c.id)==='learning');
+  const kn=cc.filter(c=>getStatus(c.id)==='known');
   deck=[...shuffle(lr),...shuffle(nw).slice(0,15),...shuffle(kn).slice(0,5)];
-  if(!deck.length) deck=shuffle([...cards]).slice(0,20);
+  if(!deck.length) deck=shuffle([...cc]).slice(0,20);
   deckIdx=0; flipped=false;
   sessionStats={total:0,good:0,hard:0,again:0,skipped:0};
 }
 function getFront(card) {
-  if(currentDir==='ru_pl') return {text:card.ru,lang:'RU',hint:'Переведи на польский'};
-  return {text:card.pl,lang:'PL',hint:'Переведи на русский'};
+  const ll = L();
+  if(currentDir==='dir1') return {text:card.w2,lang:'RU',hint:ll.dir1hint};
+  return {text:card.w1,lang:ll.l1,hint:ll.dir2hint};
 }
 function getBack(card) {
-  if(currentDir==='ru_pl') return {text:card.pl,lang:'PL'};
-  return {text:card.ru,lang:'RU'};
+  const ll = L();
+  if(currentDir==='dir1') return {text:card.w1,lang:ll.l1};
+  return {text:card.w2,lang:'RU'};
 }
 
 function render() {
   const app=document.getElementById('app');
   const stats=getStats();
+  const ll = L();
   let html=`
+    <div class="lang-toggle">
+      <button class="lang-btn ${currentLang==='pl'?'active':''}" onclick="switchLang('pl')">\u{1F1F5}\u{1F1F1} Polski</button>
+      <button class="lang-btn ${currentLang==='en'?'active':''}" onclick="switchLang('en')">\u{1F1EC}\u{1F1E7} English</button>
+    </div>
     <div class="header">
-      <h1>Polski Flashcards</h1>
-      <div class="sub">${cards.length} fraz i slów do nauki</div>
+      <h1>${ll.title}</h1>
+      <div class="sub">${ll.sub(cards().length)}</div>
     </div>
     <div class="stats-bar">
       <div class="stat red"><div class="num">${stats.new}</div><div class="label">Nowe</div></div>
@@ -322,8 +573,8 @@ function render() {
   if(currentMode!=='browse') {
     html+=`
     <div class="directions">
-      <button class="dir-btn ${currentDir==='ru_pl'?'active':''}" onclick="setDir('ru_pl')">RU &#x2192; PL</button>
-      <button class="dir-btn ${currentDir==='pl_ru'?'active':''}" onclick="setDir('pl_ru')">PL &#x2192; RU</button>
+      <button class="dir-btn ${currentDir==='dir1'?'active':''}" onclick="setDir('dir1')">${ll.dir1label}</button>
+      <button class="dir-btn ${currentDir==='dir2'?'active':''}" onclick="setDir('dir2')">${ll.dir2label}</button>
     </div>`;
   }
 
@@ -342,23 +593,25 @@ function renderStudy() {
   const pct=deck.length>0?Math.round((deckIdx/deck.length)*100):0;
 
   let backExtra='';
-  if(card.exPl) {
-    backExtra=`<div class="card-example"><strong>${card.exPl}</strong><br>${card.exRu}</div>`;
+  if(card.ex1) {
+    backExtra=`<div class="card-example"><strong>${card.ex1}</strong><br>${card.ex2}</div>`;
   }
+
+  const catLabel = card.cat ? card.cat : '';
 
   let html=`
     <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="card-container" onclick="flipCard()">
       <div class="flashcard ${flipped?'flipped':''}" id="flashcard">
         <div class="card-face card-front">
-          <div class="card-category">${front.lang}</div>
+          <div class="card-category">${front.lang}${catLabel?' • '+catLabel:''}</div>
           <div class="card-counter">${deckIdx+1} / ${deck.length}</div>
           <div class="card-word">${front.text}</div>
           <div class="card-hint">${front.hint}</div>
           <div class="tap-hint">&#x1F447; tap to flip</div>
         </div>
         <div class="card-face card-back">
-          <div class="card-category">${back.lang}</div>
+          <div class="card-category">${back.lang}${catLabel?' • '+catLabel:''}</div>
           <div class="card-counter">${deckIdx+1} / ${deck.length}</div>
           <div class="card-word">${back.text}</div>
           ${backExtra}
@@ -386,19 +639,22 @@ function renderQuiz() {
   if(deckIdx>=deck.length) return renderDone();
   const card=deck[deckIdx];
   const front=getFront(card);
+  const ll = L();
   const pct=deck.length>0?Math.round((deckIdx/deck.length)*100):0;
 
   let options=[card];
-  const others=cards.filter(c=>c.id!==card.id);
+  const others=cards().filter(c=>c.id!==card.id);
   const sh=shuffle(others);
   for(let i=0;options.length<4&&i<sh.length;i++) options.push(sh[i]);
   options=shuffle(options);
+
+  const dirLabel = currentDir==='dir1' ? ll.l1 : 'RU';
 
   let html=`
     <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="card-container" style="min-height:120px;align-items:flex-end">
       <div style="text-align:center">
-        <div style="font-size:.75em;color:var(--text2);margin-bottom:8px">${front.lang} &#x2192; ${currentDir==='ru_pl'?'PL':'RU'} &nbsp; (${deckIdx+1}/${deck.length})</div>
+        <div style="font-size:.75em;color:var(--text2);margin-bottom:8px">${front.lang} &#x2192; ${dirLabel} &nbsp; (${deckIdx+1}/${deck.length})</div>
         <div class="card-word" style="font-size:1.5em">${front.text}</div>
       </div>
     </div>
@@ -419,15 +675,15 @@ function renderQuiz() {
   if(quizAnswer!==null) {
     const card2=deck[deckIdx];
     let ex='';
-    if(card2.exPl) ex=`<div style="text-align:center;margin-top:10px;font-size:.82em;color:var(--text2)"><strong style="color:var(--text)">${card2.exPl}</strong><br>${card2.exRu}</div>`;
+    if(card2.ex1) ex=`<div style="text-align:center;margin-top:10px;font-size:.82em;color:var(--text2)"><strong style="color:var(--text)">${card2.ex1}</strong><br>${card2.ex2}</div>`;
     html+=ex+`<div style="text-align:center;margin-top:12px"><button class="next-arrow" onclick="nextQuiz()" style="display:inline-flex">&#x27A1;</button></div>`;
   }
   return html;
 }
 
 function renderBrowse() {
-  let filtered=cards;
-  if(searchQuery){const q=searchQuery.toLowerCase();filtered=filtered.filter(c=>c.pl.toLowerCase().includes(q)||c.ru.toLowerCase().includes(q));}
+  let filtered=cards();
+  if(searchQuery){const q=searchQuery.toLowerCase();filtered=filtered.filter(c=>c.w1.toLowerCase().includes(q)||c.w2.toLowerCase().includes(q));}
   if(filterStatus!=='all') filtered=filtered.filter(c=>getStatus(c.id)===filterStatus);
   let html=`
     <div class="filter-bar">
@@ -444,13 +700,14 @@ function renderBrowse() {
     const s=getStatus(c.id);
     const sC=s==='new'?'new':s==='learning'?'learning':'known';
     const sL=s==='new'?'Nowa':s==='learning'?'Uczenie':'Znana';
+    const catBadge = c.cat ? `<span style="font-size:.65em;color:var(--accent);opacity:.6;margin-left:6px">${c.cat}</span>` : '';
     html+=`
       <div class="browse-item" onclick="this.querySelector('.detail').style.display=this.querySelector('.detail').style.display==='none'?'block':'none'">
         <span class="status ${sC}">${sL}</span>
-        <div class="pl">${c.pl}</div>
-        <div class="ru">${c.ru}</div>
+        <div class="pl">${c.w1}${catBadge}</div>
+        <div class="ru">${c.w2}</div>
         <div class="detail" style="display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)">
-          ${c.exPl?`<div style="font-size:.82em;color:var(--text2)"><strong style="color:var(--text)">${c.exPl}</strong><br>${c.exRu}</div>`:''}
+          ${c.ex1?`<div style="font-size:.82em;color:var(--text2)"><strong style="color:var(--text)">${c.ex1}</strong><br>${c.ex2}</div>`:''}
         </div>
       </div>`;
   });
@@ -534,6 +791,8 @@ document.addEventListener('keydown',e=>{
   }
 });
 
+// Init
+progress = loadProgress();
 buildDeck();render();
 
 if('serviceWorker' in navigator){
