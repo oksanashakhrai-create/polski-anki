@@ -99,6 +99,11 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .ans-btn{padding:8px 14px;font-size:.75em;min-width:70px}
   .kbd-hints{display:none}
 }
+.cat-bar{display:flex;gap:6px;margin:4px 0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 0}
+.cat-bar::-webkit-scrollbar{display:none}
+.cat-pill{padding:5px 14px;border:1.5px solid var(--card2);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;font-size:.72em;transition:.2s;white-space:nowrap;flex-shrink:0}
+.cat-pill:hover{border-color:var(--accent)}
+.cat-pill.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.15)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{animation:fadeIn .3s ease}
 </style>
@@ -108,153 +113,153 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <script>
 // ============ POLISH CARDS ============
 const CARDS_PL = [
-["Na pozór","На первый взгляд, с виду","Nowy interfejs programu wydawał się na pozór skomplikowany, ale szybko się do niego przyzwyczaiłam.","Новый интерфейс программы казался на первый взгляд сложным, но я быстро к нему привыкла."],
-["Mieć niewiele wspólnego z...","Иметь мало общего с...","Moja praca ma niewiele wspólnego z tym, co studiowałam na uczelni.","Моя работа имеет мало общего с тем, что я изучала в университете."],
-["Sięgnąć po coś","Потянуться за чем-то, обратиться к чему-то","Sięgnęłam po telefon, żeby sprawdzić powiadomienia.","Я потянулась за телефоном, чтобы проверить уведомления."],
-["Bardzo mnie to nęci","Это меня очень манит / искушает","Ten deser czekoladowy bardzo mnie nęci.","Этот шоколадный десерт очень меня манит."],
-["Kwestionować czyjąś wiedzę","Ставить под сомнение чьи-то знания","Nikt nie kwestionuje twojej wiedzy.","Никто не ставит под сомнение твои знания."],
-["Niechby nawet...","Но пусть бы даже... / Даже если бы...","Niechby nawet padało, i tak pójdziemy na spacer.","Даже если бы пошел дождь, мы все равно пойдем на прогулку."],
-["O ile to jest w ogóle możliwe","Если это вообще возможно","Chciałabym dostać zwrot pieniędzy, o ile to jest w ogóle możliwe.","Я бы хотела получить возврат денег, если это вообще возможно."],
-["Im więcej... tym bardziej...","Чем больше... тем более...","Im więcej używam wtyczek AI, tym bardziej oszczędzam czas.","Чем больше я использую ИИ-плагины, тем больше экономлю время."],
-["Wizje rozwiały się","Видения / иллюзии развеялись","Moje wątpliwości rozwiały się po rozmowie z księgową.","Мои сомнения развеялись после разговора с бухгалтером."],
-["Zwrócić się na dawne tory","Вернуться в прежнее русло","Po urlopie życie zwróciło się na dawne tory.","После отпуска жизнь вернулась в прежнее русло."],
-["Noce zaś poświęcałem na naukę","Ночи же посвящал изучению","Noce zaś poświęcałam na naukę polskiego z książkami.","Ночи же я посвящала изучению польского с книгами."],
-["Muszę się przyznać","Я должна признаться","Muszę się przyznać, że zjadłam ostatni kawałek ciasta.","Должна признаться, что я съела последний кусок торта."],
-["Ulegać wahaniom","Подвергаться колебаниям / колебаться","Zasięgi naszych rolek w social mediach ulegają wahaniom.","Охваты наших рилс в соцсетях подвержены колебаниям."],
-["Zacząć się wahać","Начать сомневаться / колебаться","Zaczęłam się wahać, czy kupić ten płaszcz, bo jest dość drogi.","Я начала сомневаться, покупать ли это пальто, потому что оно довольно дорогое."],
-["Wobec trudności","Перед лицом трудностей","Zbyt jestem niecierpliwy wobec trudności.","Слишком я нетерпелив перед лицом трудностей."],
-["W rzeczywistości","В действительности / На самом деле","Wyglądał na spokojnego, ale w rzeczywistości bardzo się denerwował.","Он выглядел спокойным, но в действительности очень нервничал."],
-["Zawsze byłam przekonana, że...","Я всегда была убеждена, что...","Zawsze byłam przekonana, że automatyzacja biznesu to klucz do rozwoju.","Я всегда была убеждена, что автоматизация бизнеса — это ключ к развитию."],
-["Odwlekać się","Откладываться / Затягиваться","Remont kuchni ciągle się odwleka, bo brakuje materiałów.","Ремонт кухни постоянно откладывается, потому что не хватает материалов."],
-["Zapowiadać się pomyślnie","Обещать быть успешным","Ten nowy projekt wideo zapowiada się bardzo pomyślnie.","Этот новый видеопроект обещает быть очень успешным."],
-["Zwłaszcza gdy...","Особенно когда...","Lubię pracować rano, zwłaszcza gdy w biurze jest jeszcze cicho.","Я люблю работать утром, особенно когда в офисе еще тихо."],
-["Wysiłki muszą być uwieńczone powodzeniem","Усилия должны увенчаться успехом","Wierzę, że nasze wysiłki muszą być uwieńczone powodzeniem — za dużo pracy w to włożyliśmy.","Верю, что наши усилия должны увенчаться успехом — слишком много труда мы в это вложили."],
-["Bądź pewna, że...","Будь уверена, что...","Bądź pewna, że paczka dotrze przed weekendem.","Будь уверена, что посылка придёт до выходных."],
-["Mieć obawy co do czegoś","Иметь опасения / сомневаться","Mam obawy co do tego nowego pracownika — jest za mało doświadczony.","У меня есть опасения насчёт этого нового сотрудника — у него слишком мало опыта."],
-["Usiłować","Пытаться / Стараться","Usiłuję otworzyć ten słoik z dżemem, ale zakrętka się zacięła.","Я пытаюсь открыть эту банку с джемом, но крышка застряла."],
-["Ku mojemu zdumieniu","К моему удивлению","Ku mojemu zdumieniu, sklep był jeszcze otwarty o dziesiątej wieczorem.","К моему удивлению, магазин был ещё открыт в десять вечера."],
-["Na skutek...","В результате... / Из-за...","Nasz lot do Hiszpanii został opóźniony na skutek silnej burzy.","Наш рейс в Испанию был задержан из-за сильной бури."],
-["Niemniej jednak","Тем не менее / И всё же","Byłam wczoraj bardzo zmęczona, niemniej jednak poszłam na basen.","Вчера я была очень уставшей, тем не менее пошла в бассейн."],
-["Przywrócić równowagę","Вернуть равновесие","Po trudnym tygodniu w pracy potrzebuję weekendu, żeby przywrócić równowagę.","После тяжёлой рабочей недели мне нужны выходные, чтобы вернуть равновесие."],
-["Rozpacz / Rozpaczać","Отчаяние / Отчаиваться","Nie płacz, nie ma sensu tak rozpaczać z powodu jednego egzaminu.","Не плачь, нет смысла так убиваться из-за одного экзамена."],
-["Stosunek","Отношение (к кому-либо)","Mam bardzo dobry stosunek do moich sąsiadów.","У меня очень хорошее отношение к моим соседям."],
-["Zaleta","Достоинство / плюс / преимущество","Główną zaletą tego mieszkania jest duży balkon.","Главное достоинство этой квартиры — большой балкон."],
-["Cierpienie","Страдание / мучение","Kiedy bolał mnie ząb, to było prawdziwe cierpienie.","Когда у меня болел зуб, это было настоящее мучение."],
-["Składać się na","Складываться из / состоять из","Na tę kwotę składa się rachunek za prąd i wodę.","Эта сумма складывается из счета за электричество и воду."],
-["Nie móc znieść","Не мочь терпеть / не выносить","Nie mogę już znosić tego hałasu za oknem.","Я больше не могу терпеть этот шум за окном."],
-["Treść","Содержание","Treść tej umowy wynajmu jest dla mnie jasna.","Содержание этого договора аренды мне понятно."],
-["Nie kojarzę","Не припоминаю / Не понимаю","Przepraszam, zupełnie nie kojarzę tej sytuacji.","Извините, я совершенно не припоминаю эту ситуацию."],
-["Żal","Сожаление / печаль / жаль","Mam wielki żal, że nie pojechaliśmy wczoraj nad morze.","Мне очень жаль, что мы не поехали вчера на море."],
-["Uścisnąć dłoń","Пожать руку","Na pożegnanie sąsiad mocno uścisnął mi dłoń.","На прощание сосед крепко пожал мне руку."],
-["Przystępnie","Доступно / понятно","Lekarz wyjaśnił mi moje wyniki badań bardzo przystępnie.","Врач объяснил мне мои результаты анализов очень доступно."],
-["Zdrowy rozsądek","Здравый смысл","Wystarczy odrobina zdrowego rozsądku, żeby nie klikać w podejrzane linki.","Достаточно капли здравого смысла, чтобы не кликать по подозрительным ссылкам."],
-["Nie do pomyślenia","Немыслимо","Wyjść z domu bez śniadania to dla mnie nie do pomyślenia.","Выйти из дома без завтрака для меня немыслимо."],
-["Tracić na wartości","Терять в цене / ценность","Stare smartfony bardzo szybko tracą na wartości.","Старые смартфоны очень быстро теряют в цене."],
-["Zdawać sobie sprawę","Отдавать себе отчет / понимать","Zdaję sobie sprawę, że to auto jest drogie, ale bardzo mi się podoba.","Я понимаю, что это авто дорогое, но оно мне очень нравится."],
-["Nie do zniesienia","Невыносимый / невыносимо","Ten letni upał w mieście jest po prostu nie do zniesienia.","Эта летняя жара в городе просто невыносима."],
-["Zrobić postępy","Сделать успехи / продвинуться","Moja córka zrobiła ogromne postępy w nauce pływania w tym miesiącu.","Моя дочь сделала огромные успехи в обучении плаванию в этом месяце."],
-["Pokusić się o","Решиться на / попытаться","Pokusiłam się o zrobienie tortu na urodziny męża, chociaż nigdy wcześniej nie piekłam.","Я решилась сделать торт на день рождения мужа, хотя никогда раньше не пекла."],
-["Mogę się pokusić","Я могу попытаться / рискнуть","Mogę się pokusić o ugotowanie czegoś tajskiego na kolację.","Могу попробовать приготовить что-нибудь тайское на ужин."],
-["Wątpliwość","Сомнение","Kupiłam te bilety do Madrytu bez żadnych wątpliwości.","Я купила эти билеты в Мадрид без всяких сомнений."],
-["Wątpić","Сомневаться","Czasami wątpię, czy kiedykolwiek opanuję polską gramatykę.","Иногда я сомневаюсь, освою ли когда-нибудь польскую грамматику."],
-["Postępować naprzód","Продвигаться вперед","Remont naszej nowej kuchni w końcu postępuje naprzód.","Ремонт нашей новой кухни наконец-то продвигается вперед."],
-["Postęp","Прогресс / продвижение","Cieszę się z twojego postępu w nauce języka — mówisz coraz lepiej!","Я рада твоему прогрессу в изучении языка — ты говоришь всё лучше!"],
-["Przynajmniej","По крайней мере / хотя бы","Zgubiłam się w drodze do muzeum, ale przynajmniej wypiłam świetną kawę.","Я потерялась по пути в музей, но по крайней мере выпила отличный кофе."],
-["Niewłaściwy","Неподходящий / неправильный","Kupiłam buty w niewłaściwym rozmiarze.","Я купила обувь неподходящего размера."],
-["Nie bierz mi za złe","Не обижайся / не держи зла","Nie bierz mi za złe, ale ta sukienka ci nie pasuje.","Не обижайся, но это платье тебе не идёт."],
-["Ścigać","Преследовать / гнаться","Mój kot uwielbia ścigać muchy po całym mieszkaniu.","Мой кот обожает гоняться за мухами по всей квартире."],
-["Ohydny","Отвратительный / мерзкий","Ten syrop na kaszel ma ohydny smak.","Этот сироп от кашля имеет отвратительный вкус."],
-["Pochłonięty","Поглощенный / увлеченный","Byłam wczoraj całkowicie pochłonięta nowym serialem i zapomniałam o kolacji.","Вчера я была полностью поглощена новым сериалом и забыла про ужин."],
-["Na samo wspomnienie","При одном только воспоминании","Na samo wspomnienie tego obiadu w restauracji robi mi się niedobrze.","При одном воспоминании об этом обеде в ресторане мне становится дурно."],
-["Skupić się / Skupiać się","Сосредоточиться / сосредотачиваться","Nie mogę się skupić na pracy, kiedy sąsiad wieci ścianę.","Не могу сосредоточиться на работе, когда сосед сверлит стену."],
-["Muszę się jeszcze nad tym zastanowić","Мне нужно еще над этим подумать","To dobra oferta, ale muszę się jeszcze nad tym zastanowić przed podpisaniem umowy.","Это хорошее предложение, но мне нужно ещё подумать перед подписанием договора."],
-["Utknąć w martwym punkcie","Зайти в тупик","Negocjacje z dostawcą utknęły w martwym punkcie — nikt nie chce ustąpić.","Переговоры с поставщиком зашли в тупик — никто не хочет уступить."],
-["Ogarnięty (czymś)","Охваченный (чем-то)","Była ogarnięta paniką, kiedy nie mogła znaleźć paszportu na lotnisku.","Она была охвачена паникой, когда не могла найти паспорт в аэропорту."],
-["Dzieje się coś podejrzanego","Происходит что-то подозрительное","Na mojej karcie pojawiły się dziwne transakcje — chyba dzieje się coś podejrzanego.","На моей карте появились странные транзакции — кажется, происходит что-то подозрительное."],
-["Niejednokrotnie podejmowała próby","Неоднократно предпринимала попытки","Niejednokrotnie podejmowałam próby rzucenia cukru, ale ciągle wracam do słodyczy.","Я неоднократно предпринимала попытки бросить сахар, но постоянно возвращаюсь к сладкому."],
-["Nietknięta","Нетронутая","Kolacja została nietknięta — nikt nie miał apetytu po tej wiadomości.","Ужин остался нетронутым — ни у кого не было аппетита после этой новости."],
-["By tak rzec","Так сказать","To jest, by tak rzec, nasza nieoficjalna tradycja firmowa.","Это, так сказать, наша неофициальная корпоративная традиция."],
-["Na wszelki wypadek","На всякий случай","Weź parasol na wszelki wypadek, bo prognoza nie jest pewna.","Возьми зонт на всякий случай, потому что прогноз неточный."],
-["Lecz mimo to","Но, несмотря на это","Było bardzo zimno, lecz mimo to poszliśmy na spacer po plaży.","Было очень холодно, но, несмотря на это, мы пошли гулять по пляжу."],
-["Nie mam żadnego pomysłu","У меня нет никакой идеи","Nie mam żadnego pomysłu, co kupić mamie na urodziny.","У меня нет никакой идеи, что купить маме на день рождения."],
-["Pokładać nadzieję","Возлагать надежды","Pokładam wielkie nadzieje w tym nowym projekcie — może wreszcie się uda.","Я возлагаю большие надежды на этот новый проект — может, наконец-то получится."],
-["Nie zawracaj mi głowy!","Не морочь мне голову!","Nie zawracaj mi głowy takimi drobiazgami — mam ważniejsze sprawy.","Не морочь мне голову такими мелочами — у меня есть дела поважнее."],
-["Obejść się bez","Обходиться без чего-либо","Nie mogę obejść się bez kawy rano.","Я не могу обойтись без кофе утром."],
-["Nie obejdzie się bez...","Не обойтись без...","Na tym spotkaniu nie obejdzie się bez tłumacza — nikt nie mówi po angielsku.","На этой встрече не обойтись без переводчика — никто не говорит по-английски."],
-["Zmieszać się","Смутиться / прийти в замешательство","Kiedy szef pochwalił mnie przy wszystkich, kompletnie się zmieszałam.","Когда шеф похвалил меня при всех, я совершенно смутилась."],
-["Wściekłość","Ярость","Poczułam wściekłość, kiedy zobaczyłam zarysowane auto na parkingu.","Я почувствовала ярость, когда увидела поцарапанную машину на парковке."],
-["Miasteczko sprawiało dziwne wrażenie","Городок производил странное впечатление","To miasteczko sprawiało dziwne wrażenie — wszystkie sklepy były zamknięte w środku dnia.","Этот городок производил странное впечатление — все магазины были закрыты посреди дня."],
-["Uprzejmie odpowiedział","Вежливо ответил","Kelner uprzejmie odpowiedział, że niestety nie ma już wolnych stolików.","Официант вежливо ответил, что, к сожалению, свободных столиков больше нет."],
-["Obawiać się podstępu","Опасаться подвоха / хитрости","Obawiam się, że nie zdążymy na pociąg — zostało tylko dziesięć minut.","Боюсь, что мы не успеем на поезд — осталось только десять минут."],
-["Wyraźnie nie do żartów","Явно не до шуток","Szefowa weszła do biura z taką miną, że wyraźnie nie było jej do żartów.","Начальница вошла в офис с таким лицом, что ей явно было не до шуток."],
-["Natychmiast","Немедленно, тотчас","Musisz natychmiast wrócić do domu — zadzwonił hydraulik.","Ты должен немедленно вернуться домой — звонил сантехник."],
-["Nie wolno odnosić się z pogardą","Нельзя относиться с презрением","Nie wolno odnosić się z pogardą do ludzi, którzy zarabiają mniej od nas.","Нельзя относиться с презрением к людям, которые зарабатывают меньше нас."],
-["Przeżyłem wstrząs","Я испытал шок","Przeżyłam wstrząs, kiedy dowiedziałam się o cenie za naprawę samochodu.","Я испытала шок, когда узнала цену за ремонт машины."],
-["W razie (czegoś)","В случае (чего-либо)","W razie deszczu weź parasol, w razie słońca — krem z filtrem.","В случае дождя возьми зонт, в случае солнца — крем с SPF."],
-["Przechodzić wszelkie pojęcie","Выходить за рамки понимания","Ceny mieszkań w Warszawie przechodzą wszelkie pojęcie.","Цены на квартиры в Варшаве выходят за рамки понимания."],
-["Nawiasem mówiąc","Между прочим","Nawiasem mówiąc, ten sklep ma promocję do końca tygodnia.","Между прочим, в этом магазине акция до конца недели."],
-["Zabić nudę","Убить скуку","Wziąłem książkę, żeby jakoś zabić nudę w pociągu.","Я взял книгу, чтобы как-то убить скуку в поезде."],
-["Wydają się zbędne","Это кажется лишним","Twoje wyjaśnienia wydają się zbędne, wszystko już rozumiem.","Твои объяснения кажутся лишними, я всё уже понимаю."],
-["Maczać w czymś palce","Быть замешанным в чем-то","Podejrzewam, że sąsiad maczał palce w zniknięciu mojej paczki.","Подозреваю, что сосед был замешан в пропаже моей посылки."],
-["Pysznić się (czymś)","Гордиться / Хвастаться / Кичиться","Nie powinieneś tak pysznić się swoimi sukcesami — to odstrasza ludzi.","Тебе не стоит так кичиться своими успехами — это отпугивает людей."],
-["A kto potrafi dowieść, że nie kłamiesz?","А кто может доказать, что не врешь?","A kto potrafi dowieść, że ta recenzja jest prawdziwa, a nie kupiona?","А кто может доказать, что этот отзыв настоящий, а не купленный?"],
-["Dojść do siebie","Прийти в себя, оправиться","Po grypie potrzebowałam tygodnia, żeby dojść do siebie.","После гриппа мне понадобилась неделя, чтобы прийти в себя."],
-["Uznać","Признать / счесть","Firma uznała moją reklamację i zwróciła pieniądze.","Фирма признала мою рекламацию и вернула деньги."],
-["Uchodzi za (coś/kogoś)","Считается (чем-то/кем-то)","Ta restauracja uchodzi za najlepszą w mieście, ale mnie nie zachwyciła.","Этот ресторан считается лучшим в городе, но меня не впечатлил."],
-["Uważać kogoś za","Считать кого-то кем-то","Uważam go za najlepszego fryzjera w okolicy.","Считаю его лучшим парикмахером в округе."],
-["Skinęła głową","Она кивнула","Zapytałam ją, czy chce kawę, i skinęła głową.","Я спросила её, хочет ли она кофе, и она кивнула."],
-["Przejść do rzeczy","Перейти к делу / к сути","Nie traćmy czasu, przejdźmy do rzeczy — ile to będzie kosztować?","Не будем терять время, перейдём к делу — сколько это будет стоить?"],
-["O to właśnie chodzi!","В этом-то и дело!","O to właśnie chodzi — problem nie w cenie, a w jakości!","В этом-то и дело — проблема не в цене, а в качестве!"],
-["Ani się waż!","Даже не смей! / Не вздумай!","Ani się waż ruszać moje ciasto z lodówki!","Даже не смей трогать мой торт из холодильника!"],
-["Brać pod uwagę","Принимать во внимание","Musimy wziąć pod uwagę koszty dostawy przy wyborze sklepu.","Мы должны принять во внимание стоимость доставки при выборе магазина."],
-["Zatrzasnąć","Захлопнуть","Wiatr zatrzasnął drzwi, a klucze zostały w środku.","Ветер захлопнул дверь, а ключи остались внутри."],
-["Nie ma się co oszukiwać","Нечего себя обманывать","Nie ma się co oszukiwać — ta dieta nie działa, muszę zmienić podejście.","Нечего себя обманывать — эта диета не работает, надо менять подход."],
-["Niby drobiazg, ale humor zepsuty","Вроде бы мелочь, но настроение испорчено","Ktoś zajął moje miejsce parkingowe — niby drobiazg, ale humor zepsuty na cały dzień.","Кто-то занял моё парковочное место — вроде мелочь, но настроение испорчено на весь день."],
-["Wzruszyć ramionami","Пожать плечами","Zapytałam go, gdzie są klucze, a on tylko wzruszył ramionami.","Я спросила его, где ключи, а он только пожал плечами."],
-["Nie znoszę kłamstwa","Терпеть не могу ложь","Nie znoszę kłamstwa — wolę usłyszeć nieprzyjemną prawdę.","Терпеть не могу ложь — предпочитаю услышать неприятную правду."],
-["W innym wypadku","В противном случае","Musisz zapłacić fakturę do piątku, w innym wypadku naliczą odsetki.","Нужно оплатить счёт до пятницы, в противном случае начислят проценты."],
-["Trudno się domyślić prawdy","Трудно догадаться о правде","Po jej uśmiechu trudno się domyślić prawdy — tak naprawdę jest bardzo smutna.","По её улыбке трудно догадаться о правде — на самом деле ей очень грустно."],
-["Rozejrzeć się wokół siebie","Осмотреться вокруг себя","Weszłam do nowego biura i rozejrzałam się wokół siebie — wyglądało super.","Я вошла в новый офис и осмотрелась вокруг — выглядело отлично."],
-["Zachowuje niewzruszony spokój","Сохраняет невозмутимое спокойствие","Mój mąż zawsze zachowuje niewzruszony spokój, nawet w korku na autostradzie.","Мой муж всегда сохраняет невозмутимое спокойствие, даже в пробке на автостраде."],
-["Głupstwa niewarte uwagi","Пустяки, не стоящие внимания","Nie przejmuj się komentarzami w internecie — to głupstwa niewarte uwagi.","Не переживай из-за комментариев в интернете — это пустяки, не стоящие внимания."],
-["Ostateczny cel","Конечная цель","Ostateczny cel tego projektu to zwiększenie sprzedaży o trzydzieści procent.","Конечная цель этого проекта — увеличить продажи на тридцать процентов."],
-["Zresztą","Впрочем / кстати","Nie chcę tam iść, zresztą jestem zmęczona.","Я не хочу туда идти, к тому же я устала."],
-["Na razie","Пока / на данный момент","To na razie wystarczy, resztę dokończymy jutro.","Этого пока достаточно, остальное доделаем завтра."],
-["Zastanawiałem się nad tym","Я об этом размышлял","Długo zastanawiałam się nad tym, czy zmienić pracę — i w końcu podjęłam decyzję.","Я долго размышляла об этом, менять ли работу — и наконец приняла решение."],
-["Odpędzać od siebie myśli","Отгонять от себя мысли","Próbuję odpędzać od siebie myśli o pracy, kiedy jestem na wakacjach.","Пытаюсь отгонять от себя мысли о работе, когда я в отпуске."],
-["Zapanowało grobowe milczenie","Воцарилось гробовое молчание","Kiedy szef ogłosił zwolnienia, w sali zapanowało grobowe milczenie.","Когда шеф объявил об увольнениях, в зале воцарилось гробовое молчание."],
-["Z całą pewnością","Совершенно точно, несомненно","Z całą pewnością mogę powiedzieć, że to najlepsza pizza w mieście.","Совершенно точно могу сказать, что это лучшая пицца в городе."],
-["Pewność siebie","Уверенность в себе","Po kursie wystąpień publicznych zyskała dużą pewność siebie.","После курса публичных выступлений она обрела большую уверенность в себе."],
-["Nie marnować czasu","Не терять время зря","Nie marnuj czasu na scrollowanie — lepiej pójdź na spacer.","Не трать время на скроллинг — лучше сходи на прогулку."],
-["Im dłużej... tym większą...","Чем дольше... тем больше...","Im dłużej tu mieszkam, tym większą czuję więź z tym miastem.","Чем дольше я тут живу, тем большую связь чувствую с этим городом."],
-["Udawać osłabionego","Притворяться слабым","Dziecko udawało osłabione, żeby nie iść do szkoły.","Ребёнок притворялся слабым, чтобы не идти в школу."],
-["Mieszać się do czegoś","Вмешиваться во что-то","Nie mieszaj się do ich kłótni — sami to rozwiążą.","Не вмешивайся в их ссору — сами разберутся."],
-["Wzbudzać podejrzenia","Вызывать подозрения","Ten facet, który kręci się po parkingu trzeci raz, wzbudza moje podejrzenia.","Этот мужик, который кружит по парковке третий раз, вызывает мои подозрения."],
-["Przeprowadzić rewizję","Провести обыск","Policja musiała przeprowadzić rewizję w mieszkaniu podejrzanego.","Полиции пришлось провести обыск в квартире подозреваемого."],
-["Rozłożyć ręce","Развести руками","Mechanik rozłożył ręce i powiedział, że naprawa potrwa tydzień.","Механик развёл руками и сказал, что ремонт займёт неделю."],
-["Przepaść bez wieści","Пропасть без вести","Moja paczka z Chin przepadła bez wieści — tracking nie działa od tygodnia.","Моя посылка из Китая пропала без вести — трекинг не работает уже неделю."],
-["Wypsnęło mi się","Вырвалось (слово), сорвалось с языка","Wypsnęło mi się o niespodziance i teraz wszyscy wiedzą.","У меня вырвалось про сюрприз, и теперь все знают."],
-["Zemdleć / wpaść w omdlenie","Упасть в обморок","Kobieta zemdlała w metrze z powodu upału — na szczęście ktoś pomógł.","Женщина упала в обморок в метро из-за жары — к счастью, кто-то помог."],
-["Nie uląkł się trudności","Он не испугался трудностей","Nie uląkłam się trudności i otworzyłam własną firmę.","Я не испугалась трудностей и открыла свою фирму."],
-["Pomyślnie","Успешно / благополучно","Operacja przebiegła pomyślnie — lekarz jest zadowolony.","Операция прошла успешно — врач доволен."],
-["Popełnić przestępstwo","Совершить преступление","Ktoś popełnił przestępstwo — okradł sklep na rogu naszej ulicy.","Кто-то совершил преступление — обокрал магазин на углу нашей улицы."],
-["Chciałbym zaprzyjaźnić się","Хотел бы подружиться","Chciałabym zaprzyjaźnić się z nowymi koleżankami z pracy.","Хотела бы подружиться с новыми коллегами на работе."],
-["Wreszcie się przydało","Наконец-то пригодилось","Uczyłam się promptowania w AI i wreszcie się przydało — skróciłam montaż wideo o połowę.","Я училась промптингу в ИИ, и наконец-то это пригодилось — я сократила монтаж видео вдвое."],
-["Dopiero","Только / только что","Dopiero wróciłam z pracy, a ty już chcesz iść na zakupy?","Я только что вернулась с работы, а ты уже хочешь идти за покупками?"],
-["Nadal","Всё ещё / по-прежнему","Nadal czekam na odpowiedź z urzędu — minął już miesiąc.","Я всё ещё жду ответа из учреждения — прошёл уже месяц."],
-["Akurat","Именно / как раз","Akurat dzisiaj nie mam czasu — może jutro?","Именно сегодня у меня нет времени — может, завтра?"],
-["Przecież","Ведь / же","Przecież mówiłam ci, żebyś wziął klucze!","Я ведь тебе говорила, чтобы ты взял ключи!"],
-["Chociaż","Хотя / несмотря на то что","Chociaż pada deszcz, idę na spacer — potrzebuję świeżego powietrza.","Хотя идёт дождь, иду на прогулку — мне нужен свежий воздух."],
-["Zresztą (слowo)","Впрочем / к тому же / да и вообще","Nie chcę tam iść, zresztą i tak nie mam czasu.","Я не хочу туда идти, к тому же у меня всё равно нет времени."],
-["W sam raz","Как раз / в самый раз","Te buty są w sam raz — ani za ciasne, ani za luźne.","Эти туфли в самый раз — ни тесные, ни свободные."],
-["Ponieważ","Так как / поскольку / потому что","Ponieważ jest zimno, założyłam kurtkę i szalik.","Так как холодно, я надела куртку и шарф."],
-["Natomiast","А / же / напротив","Ja piję kawę, mój brat natomiast woli herbatę.","Я пью кофе, мой брат же предпочитает чай."],
-["Niemal","Почти / чуть ли не","Niemal zapomniałam o spotkaniu — dobrze, że telefon przypomniał.","Чуть не забыла о встрече — хорошо, что телефон напомнил."],
-["Bowiem","Ведь / поскольку / ибо","Nie mogę przyjść na imprezę, jestem bowiem na dyżurze w pracy.","Не могу прийти на вечеринку, я ведь на дежурстве на работе."],
-["Wbrew","Вопреки","Wbrew prognozom pogody, dzisiaj było słonecznie i ciepło.","Вопреки прогнозам погоды, сегодня было солнечно и тепло."],
-["Zaś","Же / а / в свою очередь","Ja piję czarną kawę, mój mąż zaś woli z mlekiem.","Я пью чёрный кофе, мой муж же предпочитает с молоком."],
-["Niebawem","Вскоре / скоро","Niebawem otworzą nowy sklep IKEA w naszym mieście.","Вскоре откроют новый магазин IKEA в нашем городе."],
-["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно."],
+["Na pozór","На первый взгляд, с виду","Nowy interfejs programu wydawał się na pozór skomplikowany, ale szybko się do niego przyzwyczaiłam.","Новый интерфейс программы казался на первый взгляд сложным, но я быстро к нему привыкла.","Франкенштейн"],
+["Mieć niewiele wspólnego z...","Иметь мало общего с...","Moja praca ma niewiele wspólnego z tym, co studiowałam na uczelni.","Моя работа имеет мало общего с тем, что я изучала в университете.","Франкенштейн"],
+["Sięgnąć po coś","Потянуться за чем-то, обратиться к чему-то","Sięgnęłam po telefon, żeby sprawdzić powiadomienia.","Я потянулась за телефоном, чтобы проверить уведомления.","Франкенштейн"],
+["Bardzo mnie to nęci","Это меня очень манит / искушает","Ten deser czekoladowy bardzo mnie nęci.","Этот шоколадный десерт очень меня манит.","Франкенштейн"],
+["Kwestionować czyjąś wiedzę","Ставить под сомнение чьи-то знания","Nikt nie kwestionuje twojej wiedzy.","Никто не ставит под сомнение твои знания.","Франкенштейн"],
+["Niechby nawet...","Но пусть бы даже... / Даже если бы...","Niechby nawet padało, i tak pójdziemy na spacer.","Даже если бы пошел дождь, мы все равно пойдем на прогулку.","Франкенштейн"],
+["O ile to jest w ogóle możliwe","Если это вообще возможно","Chciałabym dostać zwrot pieniędzy, o ile to jest w ogóle możliwe.","Я бы хотела получить возврат денег, если это вообще возможно.","Франкенштейн"],
+["Im więcej... tym bardziej...","Чем больше... тем более...","Im więcej używam wtyczek AI, tym bardziej oszczędzam czas.","Чем больше я использую ИИ-плагины, тем больше экономлю время.","Франкенштейн"],
+["Wizje rozwiały się","Видения / иллюзии развеялись","Moje wątpliwości rozwiały się po rozmowie z księgową.","Мои сомнения развеялись после разговора с бухгалтером.","Франкенштейн"],
+["Zwrócić się na dawne tory","Вернуться в прежнее русло","Po urlopie życie zwróciło się na dawne tory.","После отпуска жизнь вернулась в прежнее русло.","Франкенштейн"],
+["Noce zaś poświęcałem na naukę","Ночи же посвящал изучению","Noce zaś poświęcałam na naukę polskiego z książkami.","Ночи же я посвящала изучению польского с книгами.","Франкенштейн"],
+["Muszę się przyznać","Я должна признаться","Muszę się przyznać, że zjadłam ostatni kawałek ciasta.","Должна признаться, что я съела последний кусок торта.","Франкенштейн"],
+["Ulegać wahaniom","Подвергаться колебаниям / колебаться","Zasięgi naszych rolek w social mediach ulegają wahaniom.","Охваты наших рилс в соцсетях подвержены колебаниям.","Франкенштейн"],
+["Zacząć się wahać","Начать сомневаться / колебаться","Zaczęłam się wahać, czy kupić ten płaszcz, bo jest dość drogi.","Я начала сомневаться, покупать ли это пальто, потому что оно довольно дорогое.","Франкенштейн"],
+["Wobec trudności","Перед лицом трудностей","Zbyt jestem niecierpliwy wobec trudności.","Слишком я нетерпелив перед лицом трудностей.","Франкенштейн"],
+["W rzeczywistości","В действительности / На самом деле","Wyglądał na spokojnego, ale w rzeczywistości bardzo się denerwował.","Он выглядел спокойным, но в действительности очень нервничал.","Франкенштейн"],
+["Zawsze byłam przekonana, że...","Я всегда была убеждена, что...","Zawsze byłam przekonana, że automatyzacja biznesu to klucz do rozwoju.","Я всегда была убеждена, что автоматизация бизнеса — это ключ к развитию.","Франкенштейн"],
+["Odwlekać się","Откладываться / Затягиваться","Remont kuchni ciągle się odwleka, bo brakuje materiałów.","Ремонт кухни постоянно откладывается, потому что не хватает материалов.","Франкенштейн"],
+["Zapowiadać się pomyślnie","Обещать быть успешным","Ten nowy projekt wideo zapowiada się bardzo pomyślnie.","Этот новый видеопроект обещает быть очень успешным.","Франкенштейн"],
+["Zwłaszcza gdy...","Особенно когда...","Lubię pracować rano, zwłaszcza gdy w biurze jest jeszcze cicho.","Я люблю работать утром, особенно когда в офисе еще тихо.","Франкенштейн"],
+["Wysiłki muszą być uwieńczone powodzeniem","Усилия должны увенчаться успехом","Wierzę, że nasze wysiłki muszą być uwieńczone powodzeniem — za dużo pracy w to włożyliśmy.","Верю, что наши усилия должны увенчаться успехом — слишком много труда мы в это вложили.","Франкенштейн"],
+["Bądź pewna, że...","Будь уверена, что...","Bądź pewna, że paczka dotrze przed weekendem.","Будь уверена, что посылка придёт до выходных.","Франкенштейн"],
+["Mieć obawy co do czegoś","Иметь опасения / сомневаться","Mam obawy co do tego nowego pracownika — jest za mało doświadczony.","У меня есть опасения насчёт этого нового сотрудника — у него слишком мало опыта.","Франкенштейн"],
+["Usiłować","Пытаться / Стараться","Usiłuję otworzyć ten słoik z dżemem, ale zakrętka się zacięła.","Я пытаюсь открыть эту банку с джемом, но крышка застряла.","Франкенштейн"],
+["Ku mojemu zdumieniu","К моему удивлению","Ku mojemu zdumieniu, sklep był jeszcze otwarty o dziesiątej wieczorem.","К моему удивлению, магазин был ещё открыт в десять вечера.","Франкенштейн"],
+["Na skutek...","В результате... / Из-за...","Nasz lot do Hiszpanii został opóźniony na skutek silnej burzy.","Наш рейс в Испанию был задержан из-за сильной бури.","Франкенштейн"],
+["Niemniej jednak","Тем не менее / И всё же","Byłam wczoraj bardzo zmęczona, niemniej jednak poszłam na basen.","Вчера я была очень уставшей, тем не менее пошла в бассейн.","Франкенштейн"],
+["Przywrócić równowagę","Вернуть равновесие","Po trudnym tygodniu w pracy potrzebuję weekendu, żeby przywrócić równowagę.","После тяжёлой рабочей недели мне нужны выходные, чтобы вернуть равновесие.","Франкенштейн"],
+["Rozpacz / Rozpaczać","Отчаяние / Отчаиваться","Nie płacz, nie ma sensu tak rozpaczać z powodu jednego egzaminu.","Не плачь, нет смысла так убиваться из-за одного экзамена.","Франкенштейн"],
+["Stosunek","Отношение (к кому-либо)","Mam bardzo dobry stosunek do moich sąsiadów.","У меня очень хорошее отношение к моим соседям.","Франкенштейн"],
+["Zaleta","Достоинство / плюс / преимущество","Główną zaletą tego mieszkania jest duży balkon.","Главное достоинство этой квартиры — большой балкон.","Франкенштейн"],
+["Cierpienie","Страдание / мучение","Kiedy bolał mnie ząb, to było prawdziwe cierpienie.","Когда у меня болел зуб, это было настоящее мучение.","Франкенштейн"],
+["Składać się na","Складываться из / состоять из","Na tę kwotę składa się rachunek za prąd i wodę.","Эта сумма складывается из счета за электричество и воду.","Франкенштейн"],
+["Nie móc znieść","Не мочь терпеть / не выносить","Nie mogę już znosić tego hałasu za oknem.","Я больше не могу терпеть этот шум за окном.","Франкенштейн"],
+["Treść","Содержание","Treść tej umowy wynajmu jest dla mnie jasna.","Содержание этого договора аренды мне понятно.","Франкенштейн"],
+["Nie kojarzę","Не припоминаю / Не понимаю","Przepraszam, zupełnie nie kojarzę tej sytuacji.","Извините, я совершенно не припоминаю эту ситуацию.","Франкенштейн"],
+["Żal","Сожаление / печаль / жаль","Mam wielki żal, że nie pojechaliśmy wczoraj nad morze.","Мне очень жаль, что мы не поехали вчера на море.","Франкенштейн"],
+["Uścisnąć dłoń","Пожать руку","Na pożegnanie sąsiad mocno uścisnął mi dłoń.","На прощание сосед крепко пожал мне руку.","Франкенштейн"],
+["Przystępnie","Доступно / понятно","Lekarz wyjaśnił mi moje wyniki badań bardzo przystępnie.","Врач объяснил мне мои результаты анализов очень доступно.","Франкенштейн"],
+["Zdrowy rozsądek","Здравый смысл","Wystarczy odrobina zdrowego rozsądku, żeby nie klikać w podejrzane linki.","Достаточно капли здравого смысла, чтобы не кликать по подозрительным ссылкам.","Франкенштейн"],
+["Nie do pomyślenia","Немыслимо","Wyjść z domu bez śniadania to dla mnie nie do pomyślenia.","Выйти из дома без завтрака для меня немыслимо.","Франкенштейн"],
+["Tracić na wartości","Терять в цене / ценность","Stare smartfony bardzo szybko tracą na wartości.","Старые смартфоны очень быстро теряют в цене.","Франкенштейн"],
+["Zdawać sobie sprawę","Отдавать себе отчет / понимать","Zdaję sobie sprawę, że to auto jest drogie, ale bardzo mi się podoba.","Я понимаю, что это авто дорогое, но оно мне очень нравится.","Франкенштейн"],
+["Nie do zniesienia","Невыносимый / невыносимо","Ten letni upał w mieście jest po prostu nie do zniesienia.","Эта летняя жара в городе просто невыносима.","Франкенштейн"],
+["Zrobić postępy","Сделать успехи / продвинуться","Moja córka zrobiła ogromne postępy w nauce pływania w tym miesiącu.","Моя дочь сделала огромные успехи в обучении плаванию в этом месяце.","Франкенштейн"],
+["Pokusić się o","Решиться на / попытаться","Pokusiłam się o zrobienie tortu na urodziny męża, chociaż nigdy wcześniej nie piekłam.","Я решилась сделать торт на день рождения мужа, хотя никогда раньше не пекла.","Франкенштейн"],
+["Mogę się pokusić","Я могу попытаться / рискнуть","Mogę się pokusić o ugotowanie czegoś tajskiego na kolację.","Могу попробовать приготовить что-нибудь тайское на ужин.","Франкенштейн"],
+["Wątpliwość","Сомнение","Kupiłam te bilety do Madrytu bez żadnych wątpliwości.","Я купила эти билеты в Мадрид без всяких сомнений.","Франкенштейн"],
+["Wątpić","Сомневаться","Czasami wątpię, czy kiedykolwiek opanuję polską gramatykę.","Иногда я сомневаюсь, освою ли когда-нибудь польскую грамматику.","Франкенштейн"],
+["Postępować naprzód","Продвигаться вперед","Remont naszej nowej kuchni w końcu postępuje naprzód.","Ремонт нашей новой кухни наконец-то продвигается вперед.","Франкенштейн"],
+["Postęp","Прогресс / продвижение","Cieszę się z twojego postępu w nauce języka — mówisz coraz lepiej!","Я рада твоему прогрессу в изучении языка — ты говоришь всё лучше!","Франкенштейн"],
+["Przynajmniej","По крайней мере / хотя бы","Zgubiłam się w drodze do muzeum, ale przynajmniej wypiłam świetną kawę.","Я потерялась по пути в музей, но по крайней мере выпила отличный кофе.","Франкенштейн"],
+["Niewłaściwy","Неподходящий / неправильный","Kupiłam buty w niewłaściwym rozmiarze.","Я купила обувь неподходящего размера.","Франкенштейн"],
+["Nie bierz mi za złe","Не обижайся / не держи зла","Nie bierz mi za złe, ale ta sukienka ci nie pasuje.","Не обижайся, но это платье тебе не идёт.","Франкенштейн"],
+["Ścigać","Преследовать / гнаться","Mój kot uwielbia ścigać muchy po całym mieszkaniu.","Мой кот обожает гоняться за мухами по всей квартире.","Франкенштейн"],
+["Ohydny","Отвратительный / мерзкий","Ten syrop na kaszel ma ohydny smak.","Этот сироп от кашля имеет отвратительный вкус.","Франкенштейн"],
+["Pochłonięty","Поглощенный / увлеченный","Byłam wczoraj całkowicie pochłonięta nowym serialem i zapomniałam o kolacji.","Вчера я была полностью поглощена новым сериалом и забыла про ужин.","Франкенштейн"],
+["Na samo wspomnienie","При одном только воспоминании","Na samo wspomnienie tego obiadu w restauracji robi mi się niedobrze.","При одном воспоминании об этом обеде в ресторане мне становится дурно.","Франкенштейн"],
+["Skupić się / Skupiać się","Сосредоточиться / сосредотачиваться","Nie mogę się skupić na pracy, kiedy sąsiad wieci ścianę.","Не могу сосредоточиться на работе, когда сосед сверлит стену.","Франкенштейн"],
+["Muszę się jeszcze nad tym zastanowić","Мне нужно еще над этим подумать","To dobra oferta, ale muszę się jeszcze nad tym zastanowić przed podpisaniem umowy.","Это хорошее предложение, но мне нужно ещё подумать перед подписанием договора.","Левиафан"],
+["Utknąć w martwym punkcie","Зайти в тупик","Negocjacje z dostawcą utknęły w martwym punkcie — nikt nie chce ustąpić.","Переговоры с поставщиком зашли в тупик — никто не хочет уступить.","Левиафан"],
+["Ogarnięty (czymś)","Охваченный (чем-то)","Była ogarnięta paniką, kiedy nie mogła znaleźć paszportu na lotnisku.","Она была охвачена паникой, когда не могла найти паспорт в аэропорту.","Левиафан"],
+["Dzieje się coś podejrzanego","Происходит что-то подозрительное","Na mojej karcie pojawiły się dziwne transakcje — chyba dzieje się coś podejrzanego.","На моей карте появились странные транзакции — кажется, происходит что-то подозрительное.","Левиафан"],
+["Niejednokrotnie podejmowała próby","Неоднократно предпринимала попытки","Niejednokrotnie podejmowałam próby rzucenia cukru, ale ciągle wracam do słodyczy.","Я неоднократно предпринимала попытки бросить сахар, но постоянно возвращаюсь к сладкому.","Левиафан"],
+["Nietknięta","Нетронутая","Kolacja została nietknięta — nikt nie miał apetytu po tej wiadomości.","Ужин остался нетронутым — ни у кого не было аппетита после этой новости.","Левиафан"],
+["By tak rzec","Так сказать","To jest, by tak rzec, nasza nieoficjalna tradycja firmowa.","Это, так сказать, наша неофициальная корпоративная традиция.","Левиафан"],
+["Na wszelki wypadek","На всякий случай","Weź parasol na wszelki wypadek, bo prognoza nie jest pewna.","Возьми зонт на всякий случай, потому что прогноз неточный.","Левиафан"],
+["Lecz mimo to","Но, несмотря на это","Było bardzo zimno, lecz mimo to poszliśmy na spacer po plaży.","Было очень холодно, но, несмотря на это, мы пошли гулять по пляжу.","Левиафан"],
+["Nie mam żadnego pomysłu","У меня нет никакой идеи","Nie mam żadnego pomysłu, co kupić mamie na urodziny.","У меня нет никакой идеи, что купить маме на день рождения.","Левиафан"],
+["Pokładać nadzieję","Возлагать надежды","Pokładam wielkie nadzieje w tym nowym projekcie — może wreszcie się uda.","Я возлагаю большие надежды на этот новый проект — может, наконец-то получится.","Левиафан"],
+["Nie zawracaj mi głowy!","Не морочь мне голову!","Nie zawracaj mi głowy takimi drobiazgami — mam ważniejsze sprawy.","Не морочь мне голову такими мелочами — у меня есть дела поважнее.","Левиафан"],
+["Obejść się bez","Обходиться без чего-либо","Nie mogę obejść się bez kawy rano.","Я не могу обойтись без кофе утром.","Левиафан"],
+["Nie obejdzie się bez...","Не обойтись без...","Na tym spotkaniu nie obejdzie się bez tłumacza — nikt nie mówi po angielsku.","На этой встрече не обойтись без переводчика — никто не говорит по-английски.","Левиафан"],
+["Zmieszać się","Смутиться / прийти в замешательство","Kiedy szef pochwalił mnie przy wszystkich, kompletnie się zmieszałam.","Когда шеф похвалил меня при всех, я совершенно смутилась.","Левиафан"],
+["Wściekłość","Ярость","Poczułam wściekłość, kiedy zobaczyłam zarysowane auto na parkingu.","Я почувствовала ярость, когда увидела поцарапанную машину на парковке.","Левиафан"],
+["Miasteczko sprawiało dziwne wrażenie","Городок производил странное впечатление","To miasteczko sprawiało dziwne wrażenie — wszystkie sklepy były zamknięte w środku dnia.","Этот городок производил странное впечатление — все магазины были закрыты посреди дня.","Левиафан"],
+["Uprzejmie odpowiedział","Вежливо ответил","Kelner uprzejmie odpowiedział, że niestety nie ma już wolnych stolików.","Официант вежливо ответил, что, к сожалению, свободных столиков больше нет.","Левиафан"],
+["Obawiać się podstępu","Опасаться подвоха / хитрости","Obawiam się, że nie zdążymy na pociąg — zostało tylko dziesięć minut.","Боюсь, что мы не успеем на поезд — осталось только десять минут.","Левиафан"],
+["Wyraźnie nie do żartów","Явно не до шуток","Szefowa weszła do biura z taką miną, że wyraźnie nie było jej do żartów.","Начальница вошла в офис с таким лицом, что ей явно было не до шуток.","Левиафан"],
+["Natychmiast","Немедленно, тотчас","Musisz natychmiast wrócić do domu — zadzwonił hydraulik.","Ты должен немедленно вернуться домой — звонил сантехник.","Левиафан"],
+["Nie wolno odnosić się z pogardą","Нельзя относиться с презрением","Nie wolno odnosić się z pogardą do ludzi, którzy zarabiają mniej od nas.","Нельзя относиться с презрением к людям, которые зарабатывают меньше нас.","Левиафан"],
+["Przeżyłem wstrząs","Я испытал шок","Przeżyłam wstrząs, kiedy dowiedziałam się o cenie za naprawę samochodu.","Я испытала шок, когда узнала цену за ремонт машины.","Левиафан"],
+["W razie (czegoś)","В случае (чего-либо)","W razie deszczu weź parasol, w razie słońca — krem z filtrem.","В случае дождя возьми зонт, в случае солнца — крем с SPF.","Левиафан"],
+["Przechodzić wszelkie pojęcie","Выходить за рамки понимания","Ceny mieszkań w Warszawie przechodzą wszelkie pojęcie.","Цены на квартиры в Варшаве выходят за рамки понимания.","Левиафан"],
+["Nawiasem mówiąc","Между прочим","Nawiasem mówiąc, ten sklep ma promocję do końca tygodnia.","Между прочим, в этом магазине акция до конца недели.","Левиафан"],
+["Zabić nudę","Убить скуку","Wziąłem książkę, żeby jakoś zabić nudę w pociągu.","Я взял книгу, чтобы как-то убить скуку в поезде.","Левиафан"],
+["Wydają się zbędne","Это кажется лишним","Twoje wyjaśnienia wydają się zbędne, wszystko już rozumiem.","Твои объяснения кажутся лишними, я всё уже понимаю.","Левиафан"],
+["Maczać w czymś palce","Быть замешанным в чем-то","Podejrzewam, że sąsiad maczał palce w zniknięciu mojej paczki.","Подозреваю, что сосед был замешан в пропаже моей посылки.","Левиафан"],
+["Pysznić się (czymś)","Гордиться / Хвастаться / Кичиться","Nie powinieneś tak pysznić się swoimi sukcesami — to odstrasza ludzi.","Тебе не стоит так кичиться своими успехами — это отпугивает людей.","Левиафан"],
+["A kto potrafi dowieść, że nie kłamiesz?","А кто может доказать, что не врешь?","A kto potrafi dowieść, że ta recenzja jest prawdziwa, a nie kupiona?","А кто может доказать, что этот отзыв настоящий, а не купленный?","Левиафан"],
+["Dojść do siebie","Прийти в себя, оправиться","Po grypie potrzebowałam tygodnia, żeby dojść do siebie.","После гриппа мне понадобилась неделя, чтобы прийти в себя.","Левиафан"],
+["Uznać","Признать / счесть","Firma uznała moją reklamację i zwróciła pieniądze.","Фирма признала мою рекламацию и вернула деньги.","Левиафан"],
+["Uchodzi za (coś/kogoś)","Считается (чем-то/кем-то)","Ta restauracja uchodzi za najlepszą w mieście, ale mnie nie zachwyciła.","Этот ресторан считается лучшим в городе, но меня не впечатлил.","Левиафан"],
+["Uważać kogoś za","Считать кого-то кем-то","Uważam go za najlepszego fryzjera w okolicy.","Считаю его лучшим парикмахером в округе.","Левиафан"],
+["Skinęła głową","Она кивнула","Zapytałam ją, czy chce kawę, i skinęła głową.","Я спросила её, хочет ли она кофе, и она кивнула.","Левиафан"],
+["Przejść do rzeczy","Перейти к делу / к сути","Nie traćmy czasu, przejdźmy do rzeczy — ile to będzie kosztować?","Не будем терять время, перейдём к делу — сколько это будет стоить?","Левиафан"],
+["O to właśnie chodzi!","В этом-то и дело!","O to właśnie chodzi — problem nie w cenie, a w jakości!","В этом-то и дело — проблема не в цене, а в качестве!","Левиафан"],
+["Ani się waż!","Даже не смей! / Не вздумай!","Ani się waż ruszać moje ciasto z lodówki!","Даже не смей трогать мой торт из холодильника!","Левиафан"],
+["Brać pod uwagę","Принимать во внимание","Musimy wziąć pod uwagę koszty dostawy przy wyborze sklepu.","Мы должны принять во внимание стоимость доставки при выборе магазина.","Левиафан"],
+["Zatrzasnąć","Захлопнуть","Wiatr zatrzasnął drzwi, a klucze zostały w środku.","Ветер захлопнул дверь, а ключи остались внутри.","Левиафан"],
+["Nie ma się co oszukiwać","Нечего себя обманывать","Nie ma się co oszukiwać — ta dieta nie działa, muszę zmienić podejście.","Нечего себя обманывать — эта диета не работает, надо менять подход.","Левиафан"],
+["Niby drobiazg, ale humor zepsuty","Вроде бы мелочь, но настроение испорчено","Ktoś zajął moje miejsce parkingowe — niby drobiazg, ale humor zepsuty na cały dzień.","Кто-то занял моё парковочное место — вроде мелочь, но настроение испорчено на весь день.","Левиафан"],
+["Wzruszyć ramionami","Пожать плечами","Zapytałam go, gdzie są klucze, a on tylko wzruszył ramionami.","Я спросила его, где ключи, а он только пожал плечами.","Левиафан"],
+["Nie znoszę kłamstwa","Терпеть не могу ложь","Nie znoszę kłamstwa — wolę usłyszeć nieprzyjemną prawdę.","Терпеть не могу ложь — предпочитаю услышать неприятную правду.","Левиафан"],
+["W innym wypadku","В противном случае","Musisz zapłacić fakturę do piątku, w innym wypadku naliczą odsetki.","Нужно оплатить счёт до пятницы, в противном случае начислят проценты.","Левиафан"],
+["Trudno się domyślić prawdy","Трудно догадаться о правде","Po jej uśmiechu trudno się domyślić prawdy — tak naprawdę jest bardzo smutna.","По её улыбке трудно догадаться о правде — на самом деле ей очень грустно.","Левиафан"],
+["Rozejrzeć się wokół siebie","Осмотреться вокруг себя","Weszłam do nowego biura i rozejrzałam się wokół siebie — wyglądało super.","Я вошла в новый офис и осмотрелась вокруг — выглядело отлично.","Левиафан"],
+["Zachowuje niewzruszony spokój","Сохраняет невозмутимое спокойствие","Mój mąż zawsze zachowuje niewzruszony spokój, nawet w korku na autostradzie.","Мой муж всегда сохраняет невозмутимое спокойствие, даже в пробке на автостраде.","Левиафан"],
+["Głupstwa niewarte uwagi","Пустяки, не стоящие внимания","Nie przejmuj się komentarzami w internecie — to głupstwa niewarte uwagi.","Не переживай из-за комментариев в интернете — это пустяки, не стоящие внимания.","Левиафан"],
+["Ostateczny cel","Конечная цель","Ostateczny cel tego projektu to zwiększenie sprzedaży o trzydzieści procent.","Конечная цель этого проекта — увеличить продажи на тридцать процентов.","Левиафан"],
+["Zresztą","Впрочем / кстати","Nie chcę tam iść, zresztą jestem zmęczona.","Я не хочу туда идти, к тому же я устала.","Левиафан"],
+["Na razie","Пока / на данный момент","To na razie wystarczy, resztę dokończymy jutro.","Этого пока достаточно, остальное доделаем завтра.","Левиафан"],
+["Zastanawiałem się nad tym","Я об этом размышлял","Długo zastanawiałam się nad tym, czy zmienić pracę — i w końcu podjęłam decyzję.","Я долго размышляла об этом, менять ли работу — и наконец приняла решение.","Левиафан"],
+["Odpędzać od siebie myśli","Отгонять от себя мысли","Próbuję odpędzać od siebie myśli o pracy, kiedy jestem na wakacjach.","Пытаюсь отгонять от себя мысли о работе, когда я в отпуске.","Левиафан"],
+["Zapanowało grobowe milczenie","Воцарилось гробовое молчание","Kiedy szef ogłosił zwolnienia, w sali zapanowało grobowe milczenie.","Когда шеф объявил об увольнениях, в зале воцарилось гробовое молчание.","Левиафан"],
+["Z całą pewnością","Совершенно точно, несомненно","Z całą pewnością mogę powiedzieć, że to najlepsza pizza w mieście.","Совершенно точно могу сказать, что это лучшая пицца в городе.","Левиафан"],
+["Pewność siebie","Уверенность в себе","Po kursie wystąpień publicznych zyskała dużą pewność siebie.","После курса публичных выступлений она обрела большую уверенность в себе.","Левиафан"],
+["Nie marnować czasu","Не терять время зря","Nie marnuj czasu na scrollowanie — lepiej pójdź na spacer.","Не трать время на скроллинг — лучше сходи на прогулку.","Левиафан"],
+["Im dłużej... tym większą...","Чем дольше... тем больше...","Im dłużej tu mieszkam, tym większą czuję więź z tym miastem.","Чем дольше я тут живу, тем большую связь чувствую с этим городом.","Левиафан"],
+["Udawać osłabionego","Притворяться слабым","Dziecko udawało osłabione, żeby nie iść do szkoły.","Ребёнок притворялся слабым, чтобы не идти в школу.","Левиафан"],
+["Mieszać się do czegoś","Вмешиваться во что-то","Nie mieszaj się do ich kłótni — sami to rozwiążą.","Не вмешивайся в их ссору — сами разберутся.","Левиафан"],
+["Wzbudzać podejrzenia","Вызывать подозрения","Ten facet, który kręci się po parkingu trzeci raz, wzbudza moje podejrzenia.","Этот мужик, который кружит по парковке третий раз, вызывает мои подозрения.","Левиафан"],
+["Przeprowadzić rewizję","Провести обыск","Policja musiała przeprowadzić rewizję w mieszkaniu podejrzanego.","Полиции пришлось провести обыск в квартире подозреваемого.","Левиафан"],
+["Rozłożyć ręce","Развести руками","Mechanik rozłożył ręce i powiedział, że naprawa potrwa tydzień.","Механик развёл руками и сказал, что ремонт займёт неделю.","Левиафан"],
+["Przepaść bez wieści","Пропасть без вести","Moja paczka z Chin przepadła bez wieści — tracking nie działa od tygodnia.","Моя посылка из Китая пропала без вести — трекинг не работает уже неделю.","Левиафан"],
+["Wypsnęło mi się","Вырвалось (слово), сорвалось с языка","Wypsnęło mi się o niespodziance i teraz wszyscy wiedzą.","У меня вырвалось про сюрприз, и теперь все знают.","Левиафан"],
+["Zemdleć / wpaść w omdlenie","Упасть в обморок","Kobieta zemdlała w metrze z powodu upału — na szczęście ktoś pomógł.","Женщина упала в обморок в метро из-за жары — к счастью, кто-то помог.","Левиафан"],
+["Nie uląkł się trudności","Он не испугался трудностей","Nie uląkłam się trudności i otworzyłam własną firmę.","Я не испугалась трудностей и открыла свою фирму.","Левиафан"],
+["Pomyślnie","Успешно / благополучно","Operacja przebiegła pomyślnie — lekarz jest zadowolony.","Операция прошла успешно — врач доволен.","Левиафан"],
+["Popełnić przestępstwo","Совершить преступление","Ktoś popełnił przestępstwo — okradł sklep na rogu naszej ulicy.","Кто-то совершил преступление — обокрал магазин на углу нашей улицы.","Левиафан"],
+["Chciałbym zaprzyjaźnić się","Хотел бы подружиться","Chciałabym zaprzyjaźnić się z nowymi koleżankami z pracy.","Хотела бы подружиться с новыми коллегами на работе.","Левиафан"],
+["Wreszcie się przydało","Наконец-то пригодилось","Uczyłam się promptowania w AI i wreszcie się przydało — skróciłam montaż wideo o połowę.","Я училась промптингу в ИИ, и наконец-то это пригодилось — я сократила монтаж видео вдвое.","Левиафан"],
+["Dopiero","Только / только что","Dopiero wróciłam z pracy, a ty już chcesz iść na zakupy?","Я только что вернулась с работы, а ты уже хочешь идти за покупками?","Левиафан"],
+["Nadal","Всё ещё / по-прежнему","Nadal czekam na odpowiedź z urzędu — minął już miesiąc.","Я всё ещё жду ответа из учреждения — прошёл уже месяц.","Левиафан"],
+["Akurat","Именно / как раз","Akurat dzisiaj nie mam czasu — może jutro?","Именно сегодня у меня нет времени — может, завтра?","Polski"],
+["Przecież","Ведь / же","Przecież mówiłam ci, żebyś wziął klucze!","Я ведь тебе говорила, чтобы ты взял ключи!","Polski"],
+["Chociaż","Хотя / несмотря на то что","Chociaż pada deszcz, idę na spacer — potrzebuję świeżego powietrza.","Хотя идёт дождь, иду на прогулку — мне нужен свежий воздух.","Polski"],
+["Zresztą (слowo)","Впрочем / к тому же / да и вообще","Nie chcę tam iść, zresztą i tak nie mam czasu.","Я не хочу туда идти, к тому же у меня всё равно нет времени.","Polski"],
+["W sam raz","Как раз / в самый раз","Te buty są w sam raz — ani za ciasne, ani za luźne.","Эти туфли в самый раз — ни тесные, ни свободные.","Polski"],
+["Ponieważ","Так как / поскольку / потому что","Ponieważ jest zimno, założyłam kurtkę i szalik.","Так как холодно, я надела куртку и шарф.","Polski"],
+["Natomiast","А / же / напротив","Ja piję kawę, mój brat natomiast woli herbatę.","Я пью кофе, мой брат же предпочитает чай.","Polski"],
+["Niemal","Почти / чуть ли не","Niemal zapomniałam o spotkaniu — dobrze, że telefon przypomniał.","Чуть не забыла о встрече — хорошо, что телефон напомнил.","Polski"],
+["Bowiem","Ведь / поскольку / ибо","Nie mogę przyjść na imprezę, jestem bowiem na dyżurze w pracy.","Не могу прийти на вечеринку, я ведь на дежурстве на работе.","Polski"],
+["Wbrew","Вопреки","Wbrew prognozom pogody, dzisiaj było słonecznie i ciepło.","Вопреки прогнозам погоды, сегодня было солнечно и тепло.","Polski"],
+["Zaś","Же / а / в свою очередь","Ja piję czarną kawę, mój mąż zaś woli z mlekiem.","Я пью чёрный кофе, мой муж же предпочитает с молоком.","Polski"],
+["Niebawem","Вскоре / скоро","Niebawem otworzą nowy sklep IKEA w naszym mieście.","Вскоре откроют новый магазин IKEA в нашем городе.","Разное"],
+["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно.","Разное"],
 ];
 
 // ============ ENGLISH CARDS ============
@@ -459,7 +464,7 @@ const CARDS_EN = [
 const LANGS = {
   pl: {
     key: 'polski_anki_v3',
-    cards: CARDS_PL.map((c,i) => ({id:i, w1:c[0], w2:c[1], ex1:c[2], ex2:c[3]})),
+    cards: CARDS_PL.map((c,i) => ({id:i, w1:c[0], w2:c[1], ex1:c[2], ex2:c[3], cat:c[4]})),
     title: 'Polski Flashcards',
     flag: '\u{1F1F5}\u{1F1F1}',
     label: 'Polski',
@@ -497,9 +502,12 @@ let quizAnswer = null;
 let quizOptions = null;
 let searchQuery = '';
 let filterStatus = 'all';
+let activeCategory = null; // null = all categories
 
 function L() { return LANGS[currentLang]; }
-function cards() { return L().cards; }
+function allCards() { return L().cards; }
+function cards() { return activeCategory ? allCards().filter(c => c.cat === activeCategory) : allCards(); }
+function getCategories() { const cats=[]; allCards().forEach(c=>{if(c.cat&&!cats.includes(c.cat))cats.push(c.cat)}); return cats; }
 
 function loadProgress() { try { return JSON.parse(localStorage.getItem(L().key)) || {}; } catch { return {}; } }
 function saveProgress(p) { localStorage.setItem(L().key, JSON.stringify(p)); }
@@ -508,10 +516,18 @@ function switchLang(lang) {
   currentLang = lang;
   localStorage.setItem('flashcards_lang', lang);
   progress = loadProgress();
+  activeCategory = null;
   buildDeck();
   quizAnswer = null;
   searchQuery = '';
   filterStatus = 'all';
+  render();
+}
+function setCategory(cat) {
+  activeCategory = cat;
+  buildDeck();
+  quizAnswer = null;
+  quizOptions = null;
   render();
 }
 
@@ -582,6 +598,16 @@ function render() {
     </div>`;
   }
 
+  const cats = getCategories();
+  if(cats.length > 0) {
+    html+=`<div class="cat-bar">
+      <button class="cat-pill ${activeCategory===null?'active':''}" onclick="setCategory(null)">${ll.ui.all}</button>`;
+    cats.forEach(cat => {
+      html+=`<button class="cat-pill ${activeCategory===cat?'active':''}" onclick="setCategory('${cat.replace(/'/g,"\\'")}')">${cat}</button>`;
+    });
+    html+=`</div>`;
+  }
+
   if(currentMode==='study') html+=renderStudy();
   else if(currentMode==='quiz') html+=renderQuiz();
   else html+=renderBrowse();
@@ -648,9 +674,12 @@ function renderQuiz() {
 
   if(!quizOptions || quizOptions._cardId!==card.id) {
     let opts=[card];
-    const others=cards().filter(c=>c.id!==card.id);
-    const sh=shuffle(others);
-    for(let i=0;opts.length<4&&i<sh.length;i++) opts.push(sh[i]);
+    // Smart distractors: prefer same category
+    const allC = allCards();
+    const sameCat = shuffle(allC.filter(c=>c.id!==card.id && c.cat && c.cat===card.cat));
+    const otherCat = shuffle(allC.filter(c=>c.id!==card.id && (!c.cat || c.cat!==card.cat)));
+    for(let i=0;opts.length<4&&i<sameCat.length;i++) opts.push(sameCat[i]);
+    for(let i=0;opts.length<4&&i<otherCat.length;i++) opts.push(otherCat[i]);
     opts=shuffle(opts);
     opts._cardId=card.id;
     quizOptions=opts;
