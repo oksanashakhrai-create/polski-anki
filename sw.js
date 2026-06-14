@@ -1,4 +1,4 @@
-const CACHE = 'polski-v3';
+const CACHE = 'polski-v4';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

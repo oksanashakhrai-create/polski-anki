@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Flashcards">
+<meta name="apple-mobile-web-app-title" content="PL-ENG Anki">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f0f1a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Flashcards</title>
+<title>PL-ENG Anki Cards</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--accent:#e94560;--accent2:#0f3460;--green:#00b894;--orange:#fdcb6e;--red:#e17055;--text:#eee;--text2:#aaa;--shadow:0 8px 32px rgba(0,0,0,.4)}
@@ -20,27 +20,27 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .lang-btn{padding:8px 18px;border:2px solid var(--card2);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;font-size:.85em;font-weight:600;transition:.2s}
 .lang-btn:hover{border-color:var(--accent)}
 .lang-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.18)}
-.header{text-align:center;padding:10px 0 6px}
+.header{text-align:center;padding:6px 0 4px}
 .header h1{font-size:1.6em;background:linear-gradient(135deg,#e94560,#0f3460);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
 .header .sub{color:var(--text2);font-size:.85em}
-.stats-bar{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.stats-bar{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
 .stat{flex:1;min-width:80px;background:var(--card);border-radius:12px;padding:10px;text-align:center}
 .stat .num{font-size:1.4em;font-weight:700}
 .stat .label{font-size:.7em;color:var(--text2);text-transform:uppercase;letter-spacing:1px}
 .stat.green .num{color:var(--green)}
 .stat.orange .num{color:var(--orange)}
 .stat.red .num{color:var(--red)}
-.modes{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.modes{display:flex;gap:8px;margin:6px 0;flex-wrap:wrap}
 .mode-btn{flex:1;min-width:100px;padding:10px 8px;border:none;border-radius:10px;background:var(--card);color:var(--text);cursor:pointer;font-size:.8em;transition:.2s;border:2px solid transparent}
 .mode-btn:hover{border-color:var(--accent)}
 .mode-btn.active{background:var(--accent);border-color:var(--accent)}
 .mode-btn .icon{font-size:1.3em;display:block;margin-bottom:4px}
-.directions{display:flex;gap:6px;margin:8px 0 16px;justify-content:center}
+.directions{display:flex;gap:6px;margin:6px 0 4px;justify-content:center}
 .dir-btn{padding:6px 14px;border:2px solid var(--card2);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;font-size:.75em;transition:.2s}
 .dir-btn:hover{border-color:var(--accent)}
 .dir-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.15)}
-.card-container{flex:1;display:flex;align-items:center;justify-content:center;perspective:1000px;min-height:280px;margin:8px 0}
-.flashcard{width:100%;max-width:500px;min-height:260px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
+.card-container{display:flex;align-items:flex-start;justify-content:center;perspective:1000px;min-height:220px;margin:4px 0;padding-top:8px}
+.flashcard{width:100%;max-width:500px;min-height:220px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
 .flashcard.flipped{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 .card-front{background:linear-gradient(145deg,#1a1a2e,#16213e);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.05)}
@@ -94,10 +94,17 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 @media(max-width:480px){
   .card-word{font-size:1.3em}
   .app{padding:10px;padding-top:env(safe-area-inset-top, 20px)}
-  .stat{min-width:60px;padding:8px}
+  .stat{min-width:60px;padding:6px}
   .stat .num{font-size:1.1em}
   .ans-btn{padding:8px 14px;font-size:.75em;min-width:70px}
   .kbd-hints{display:none}
+  .card-container{min-height:180px;margin:2px 0;padding-top:4px}
+  .flashcard{min-height:180px}
+  .header{padding:4px 0 2px}
+  .header h1{font-size:1.4em}
+  .progress-wrap{margin:4px 0}
+  .bottom-bar{margin:4px 0 2px}
+  .lang-toggle{margin-bottom:4px;margin-top:2px}
 }
 .cat-bar{display:flex;gap:6px;margin:4px 0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:2px 0}
 .cat-bar::-webkit-scrollbar{display:none}
@@ -247,19 +254,19 @@ const CARDS_PL = [
 ["Wreszcie się przydało","Наконец-то пригодилось","Uczyłam się promptowania w AI i wreszcie się przydało — skróciłam montaż wideo o połowę.","Я училась промптингу в ИИ, и наконец-то это пригодилось — я сократила монтаж видео вдвое.","Левиафан"],
 ["Dopiero","Только / только что","Dopiero wróciłam z pracy, a ty już chcesz iść na zakupy?","Я только что вернулась с работы, а ты уже хочешь идти за покупками?","Левиафан"],
 ["Nadal","Всё ещё / по-прежнему","Nadal czekam na odpowiedź z urzędu — minął już miesiąc.","Я всё ещё жду ответа из учреждения — прошёл уже месяц.","Левиафан"],
-["Akurat","Именно / как раз","Akurat dzisiaj nie mam czasu — może jutro?","Именно сегодня у меня нет времени — может, завтра?","Polski"],
-["Przecież","Ведь / же","Przecież mówiłam ci, żebyś wziął klucze!","Я ведь тебе говорила, чтобы ты взял ключи!","Polski"],
-["Chociaż","Хотя / несмотря на то что","Chociaż pada deszcz, idę na spacer — potrzebuję świeżego powietrza.","Хотя идёт дождь, иду на прогулку — мне нужен свежий воздух.","Polski"],
-["Zresztą (слowo)","Впрочем / к тому же / да и вообще","Nie chcę tam iść, zresztą i tak nie mam czasu.","Я не хочу туда идти, к тому же у меня всё равно нет времени.","Polski"],
-["W sam raz","Как раз / в самый раз","Te buty są w sam raz — ani za ciasne, ani za luźne.","Эти туфли в самый раз — ни тесные, ни свободные.","Polski"],
-["Ponieważ","Так как / поскольку / потому что","Ponieważ jest zimno, założyłam kurtkę i szalik.","Так как холодно, я надела куртку и шарф.","Polski"],
-["Natomiast","А / же / напротив","Ja piję kawę, mój brat natomiast woli herbatę.","Я пью кофе, мой брат же предпочитает чай.","Polski"],
-["Niemal","Почти / чуть ли не","Niemal zapomniałam o spotkaniu — dobrze, że telefon przypomniał.","Чуть не забыла о встрече — хорошо, что телефон напомнил.","Polski"],
-["Bowiem","Ведь / поскольку / ибо","Nie mogę przyjść na imprezę, jestem bowiem na dyżurze w pracy.","Не могу прийти на вечеринку, я ведь на дежурстве на работе.","Polski"],
-["Wbrew","Вопреки","Wbrew prognozom pogody, dzisiaj było słonecznie i ciepło.","Вопреки прогнозам погоды, сегодня было солнечно и тепло.","Polski"],
-["Zaś","Же / а / в свою очередь","Ja piję czarną kawę, mój mąż zaś woli z mlekiem.","Я пью чёрный кофе, мой муж же предпочитает с молоком.","Polski"],
-["Niebawem","Вскоре / скоро","Niebawem otworzą nowy sklep IKEA w naszym mieście.","Вскоре откроют новый магазин IKEA в нашем городе.","Разное"],
-["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно.","Разное"],
+["Akurat","Именно / как раз","Akurat dzisiaj nie mam czasu — może jutro?","Именно сегодня у меня нет времени — может, завтра?","Микс"],
+["Przecież","Ведь / же","Przecież mówiłam ci, żebyś wziął klucze!","Я ведь тебе говорила, чтобы ты взял ключи!","Микс"],
+["Chociaż","Хотя / несмотря на то что","Chociaż pada deszcz, idę na spacer — potrzebuję świeżego powietrza.","Хотя идёт дождь, иду на прогулку — мне нужен свежий воздух.","Микс"],
+["Zresztą (слowo)","Впрочем / к тому же / да и вообще","Nie chcę tam iść, zresztą i tak nie mam czasu.","Я не хочу туда идти, к тому же у меня всё равно нет времени.","Микс"],
+["W sam raz","Как раз / в самый раз","Te buty są w sam raz — ani za ciasne, ani za luźne.","Эти туфли в самый раз — ни тесные, ни свободные.","Микс"],
+["Ponieważ","Так как / поскольку / потому что","Ponieważ jest zimno, założyłam kurtkę i szalik.","Так как холодно, я надела куртку и шарф.","Микс"],
+["Natomiast","А / же / напротив","Ja piję kawę, mój brat natomiast woli herbatę.","Я пью кофе, мой брат же предпочитает чай.","Микс"],
+["Niemal","Почти / чуть ли не","Niemal zapomniałam o spotkaniu — dobrze, że telefon przypomniał.","Чуть не забыла о встрече — хорошо, что телефон напомнил.","Микс"],
+["Bowiem","Ведь / поскольку / ибо","Nie mogę przyjść na imprezę, jestem bowiem na dyżurze w pracy.","Не могу прийти на вечеринку, я ведь на дежурстве на работе.","Микс"],
+["Wbrew","Вопреки","Wbrew prognozom pogody, dzisiaj było słonecznie i ciepło.","Вопреки прогнозам погоды, сегодня было солнечно и тепло.","Микс"],
+["Zaś","Же / а / в свою очередь","Ja piję czarną kawę, mój mąż zaś woli z mlekiem.","Я пью чёрный кофе, мой муж же предпочитает с молоком.","Микс"],
+["Niebawem","Вскоре / скоро","Niebawem otworzą nowy sklep IKEA w naszym mieście.","Вскоре откроют новый магазин IKEA в нашем городе.","Микс"],
+["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно.","Микс"],
 ];
 
 // ============ ENGLISH CARDS ============
@@ -356,7 +363,7 @@ const CARDS_EN = [
 ["The bigger the light source, the softer the light","Чем больше источник света, тем мягче освещение","The bigger the light source, the softer and more flattering the light.","Чем больше источник света, тем мягче и выигрышнее освещение.","Video"],
 ["Use the sun as backlight rather than frontal light","Используй солнце как контровый свет, а не фронтальный","Use the sun as backlight rather than frontal light for more flattering portraits.","Используй солнце как контровый свет для более выигрышных портретов.","Video"],
 ["Rim light / Hair light","Контурный свет / свет на волосы","A rim light separates the subject from the background.","Контурный свет отделяет модель от фона.","Video"],
-["The subject blends in with the background","Объект сливается с фоном","Without rim light, the subject blends in with the background.","Без контурного света объект сливается с фоном.","Video"],
+["Blend in with the background","Сливаться с фоном","Without rim light, the subject blends in with the background.","Без контурного света объект сливается с фоном.","Video"],
 ["A rim light to separate your subject from the background","Контурный свет, чтобы отделить модель от фона","Fundamentally you want a rim light to separate your subject.","В основе своей вам нужен контурный свет, чтобы отделить модель.","Video"],
 ["Out of focus","Вне фокуса","The background should be slightly out of focus for portraits.","Фон должен быть слегка вне фокуса для портретов.","Video"],
 ["Subject moves ever so slightly, the focus gets thrown off","Объект чуть сдвинется — фокус сбивается","If the subject moves ever so slightly, the focus gets thrown off.","Если объект сдвинется хотя бы чуть-чуть, фокус сбивается.","Video"],
@@ -465,7 +472,7 @@ const LANGS = {
   pl: {
     key: 'polski_anki_v3',
     cards: CARDS_PL.map((c,i) => ({id:i, w1:c[0], w2:c[1], ex1:c[2], ex2:c[3], cat:c[4]})),
-    title: 'Polski Flashcards',
+    title: 'PL Anki Cards',
     flag: '\u{1F1F5}\u{1F1F1}',
     label: 'Polski',
     l1: 'PL', l2: 'RU',
@@ -478,7 +485,7 @@ const LANGS = {
   en: {
     key: 'english_anki_v1',
     cards: CARDS_EN.map((c,i) => ({id:i, w1:c[0], w2:c[1], ex1:c[2], ex2:c[3], cat:c[4]})),
-    title: 'English Flashcards',
+    title: 'ENG Anki Cards',
     flag: '\u{1F1EC}\u{1F1E7}',
     label: 'English',
     l1: 'EN', l2: 'RU',
