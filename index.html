@@ -59,6 +59,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .ans-btn.hard{background:var(--orange);color:#333}
 .ans-btn.good{background:var(--green);color:#fff}
 .next-arrow{width:52px;height:52px;border-radius:50%;border:2px solid var(--card2);background:var(--card);color:var(--text);font-size:1.4em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.bottom-bar .next-arrow{width:60px;height:44px;border-radius:12px;font-size:1.3em}
 .next-arrow:hover{border-color:var(--accent);background:rgba(233,69,96,.12);transform:scale(1.08)}
 .next-arrow:active{transform:scale(.95)}
 .progress-wrap{margin:8px 0;height:6px;background:var(--card);border-radius:3px;overflow:hidden}
@@ -238,7 +239,7 @@ const CARDS_PL = [
 ["Pomyślnie","Успешно / благополучно","Operacja przebiegła pomyślnie — lekarz jest zadowolony.","Операция прошла успешно — врач доволен."],
 ["Popełnić przestępstwo","Совершить преступление","Ktoś popełnił przestępstwo — okradł sklep na rogu naszej ulicy.","Кто-то совершил преступление — обокрал магазин на углу нашей улицы."],
 ["Chciałbym zaprzyjaźnić się","Хотел бы подружиться","Chciałabym zaprzyjaźnić się z nowymi koleżankami z pracy.","Хотела бы подружиться с новыми коллегами на работе."],
-["Wreszcie się przydało","Наконец-то пригодилось","Uczyłam się excela latami i wreszcie się przydało — dostałam awans.","Я годами учила Excel, и наконец-то это пригодилось — я получила повышение."],
+["Wreszcie się przydało","Наконец-то пригодилось","Uczyłam się promptowania w AI i wreszcie się przydało — skróciłam montaż wideo o połowę.","Я училась промптингу в ИИ, и наконец-то это пригодилось — я сократила монтаж видео вдвое."],
 ["Dopiero","Только / только что","Dopiero wróciłam z pracy, a ty już chcesz iść na zakupy?","Я только что вернулась с работы, а ты уже хочешь идти за покупками?"],
 ["Nadal","Всё ещё / по-прежнему","Nadal czekam na odpowiedź z urzędu — minął już miesiąc.","Я всё ещё жду ответа из учреждения — прошёл уже месяц."],
 ["Akurat","Именно / как раз","Akurat dzisiaj nie mam czasu — może jutro?","Именно сегодня у меня нет времени — может, завтра?"],
@@ -467,6 +468,7 @@ const LANGS = {
     dir1hint: 'Переведи на польский',
     dir2hint: 'Переведи на русский',
     sub: c => c+' fraz i słów do nauki',
+    ui: {nw:'Nowe',lr:'Uczenie',kn:'Znane',cards:'Karty',quiz:'Quiz',list:'Lista',search:'Szukaj / Искать...',all:'Wszystko',done:'Sesja zakończona!',newSession:'Nowa sesja',reset:'Сбросить прогресс',resetConfirm:'Сбросить весь прогресс?',again:'Ещё',hard:'Трудно',good:'Знаю',count:c=>c+' kart',passed:'Пройдено',know:'Знаю',hardL:'Трудно',againL:'Ещё раз',skipped:'Пропущено',correct:'правильных',noRatings:'Оценок не было',nowa:'Nowa',uczenie:'Uczenie',znana:'Znana'}
   },
   en: {
     key: 'english_anki_v1',
@@ -476,9 +478,10 @@ const LANGS = {
     label: 'English',
     l1: 'EN', l2: 'RU',
     dir1label: 'RU → EN', dir2label: 'EN → RU',
-    dir1hint: 'Переведи на английский',
-    dir2hint: 'Переведи на русский',
+    dir1hint: 'Translate to English',
+    dir2hint: 'Translate to Russian',
     sub: c => c+' phrases to learn',
+    ui: {nw:'New',lr:'Learning',kn:'Known',cards:'Cards',quiz:'Quiz',list:'List',search:'Search...',all:'All',done:'Session complete!',newSession:'New session',reset:'Reset progress',resetConfirm:'Reset all progress?',again:'Again',hard:'Hard',good:'Know',count:c=>c+' cards',passed:'Done',know:'Know',hardL:'Hard',againL:'Again',skipped:'Skipped',correct:'correct',noRatings:'No ratings',nowa:'New',uczenie:'Learning',znana:'Known'}
   }
 };
 
@@ -491,6 +494,7 @@ let deckIdx = 0;
 let flipped = false;
 let sessionStats = {total:0, good:0, hard:0, again:0, skipped:0};
 let quizAnswer = null;
+let quizOptions = null;
 let searchQuery = '';
 let filterStatus = 'all';
 
@@ -560,14 +564,14 @@ function render() {
       <div class="sub">${ll.sub(cards().length)}</div>
     </div>
     <div class="stats-bar">
-      <div class="stat red"><div class="num">${stats.new}</div><div class="label">Nowe</div></div>
-      <div class="stat orange"><div class="num">${stats.learning}</div><div class="label">Uczenie</div></div>
-      <div class="stat green"><div class="num">${stats.known}</div><div class="label">Znane</div></div>
+      <div class="stat red"><div class="num">${stats.new}</div><div class="label">${ll.ui.nw}</div></div>
+      <div class="stat orange"><div class="num">${stats.learning}</div><div class="label">${ll.ui.lr}</div></div>
+      <div class="stat green"><div class="num">${stats.known}</div><div class="label">${ll.ui.kn}</div></div>
     </div>
     <div class="modes">
-      <button class="mode-btn ${currentMode==='study'?'active':''}" onclick="setMode('study')"><span class="icon">&#x1F4DA;</span>Karty</button>
-      <button class="mode-btn ${currentMode==='quiz'?'active':''}" onclick="setMode('quiz')"><span class="icon">&#x2753;</span>Quiz</button>
-      <button class="mode-btn ${currentMode==='browse'?'active':''}" onclick="setMode('browse')"><span class="icon">&#x1F4CB;</span>Lista</button>
+      <button class="mode-btn ${currentMode==='study'?'active':''}" onclick="setMode('study')"><span class="icon">&#x1F4DA;</span>${ll.ui.cards}</button>
+      <button class="mode-btn ${currentMode==='quiz'?'active':''}" onclick="setMode('quiz')"><span class="icon">&#x2753;</span>${ll.ui.quiz}</button>
+      <button class="mode-btn ${currentMode==='browse'?'active':''}" onclick="setMode('browse')"><span class="icon">&#x1F4CB;</span>${ll.ui.list}</button>
     </div>`;
 
   if(currentMode!=='browse') {
@@ -622,9 +626,9 @@ function renderStudy() {
 
   if(flipped) {
     html+=`
-      <button class="ans-btn again" onclick="event.stopPropagation();answer(0)">&#x1F504; Ещё</button>
-      <button class="ans-btn hard" onclick="event.stopPropagation();answer(1)">&#x1F914; Трудно</button>
-      <button class="ans-btn good" onclick="event.stopPropagation();answer(2)">&#x2705; Знаю</button>`;
+      <button class="ans-btn again" onclick="event.stopPropagation();answer(0)">&#x1F504; ${L().ui.again}</button>
+      <button class="ans-btn hard" onclick="event.stopPropagation();answer(1)">&#x1F914; ${L().ui.hard}</button>
+      <button class="ans-btn good" onclick="event.stopPropagation();answer(2)">&#x2705; ${L().ui.good}</button>`;
   }
 
   html+=`
@@ -642,25 +646,28 @@ function renderQuiz() {
   const ll = L();
   const pct=deck.length>0?Math.round((deckIdx/deck.length)*100):0;
 
-  let options=[card];
-  const others=cards().filter(c=>c.id!==card.id);
-  const sh=shuffle(others);
-  for(let i=0;options.length<4&&i<sh.length;i++) options.push(sh[i]);
-  options=shuffle(options);
+  if(!quizOptions || quizOptions._cardId!==card.id) {
+    let opts=[card];
+    const others=cards().filter(c=>c.id!==card.id);
+    const sh=shuffle(others);
+    for(let i=0;opts.length<4&&i<sh.length;i++) opts.push(sh[i]);
+    opts=shuffle(opts);
+    opts._cardId=card.id;
+    quizOptions=opts;
+  }
 
   const dirLabel = currentDir==='dir1' ? ll.l1 : 'RU';
 
   let html=`
     <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
-    <div class="card-container" style="min-height:120px;align-items:flex-end">
-      <div style="text-align:center">
-        <div style="font-size:.75em;color:var(--text2);margin-bottom:8px">${front.lang} &#x2192; ${dirLabel} &nbsp; (${deckIdx+1}/${deck.length})</div>
-        <div class="card-word" style="font-size:1.5em">${front.text}</div>
-      </div>
+    <div style="text-align:center;padding:24px 0 16px">
+      <div style="font-size:.75em;color:var(--text2);margin-bottom:10px">${front.lang} &#x2192; ${dirLabel} &nbsp; (${deckIdx+1}/${deck.length})</div>
+      <div class="card-word" style="font-size:1.5em">${front.text}</div>
     </div>
     <div class="quiz-options">`;
 
-  options.forEach((opt,i) => {
+  quizOptions.forEach((opt,i) => {
+    if(opt._cardId) return;
     const back=getBack(opt);
     let cls='';
     if(quizAnswer!==null){
@@ -673,9 +680,8 @@ function renderQuiz() {
 
   html+=`</div>`;
   if(quizAnswer!==null) {
-    const card2=deck[deckIdx];
     let ex='';
-    if(card2.ex1) ex=`<div style="text-align:center;margin-top:10px;font-size:.82em;color:var(--text2)"><strong style="color:var(--text)">${card2.ex1}</strong><br>${card2.ex2}</div>`;
+    if(card.ex1) ex=`<div style="text-align:center;margin-top:10px;font-size:.82em;color:var(--text2)"><strong style="color:var(--text)">${card.ex1}</strong><br>${card.ex2}</div>`;
     html+=ex+`<div style="text-align:center;margin-top:12px"><button class="next-arrow" onclick="nextQuiz()" style="display:inline-flex">&#x27A1;</button></div>`;
   }
   return html;
@@ -687,19 +693,19 @@ function renderBrowse() {
   if(filterStatus!=='all') filtered=filtered.filter(c=>getStatus(c.id)===filterStatus);
   let html=`
     <div class="filter-bar">
-      <input type="text" placeholder="Szukaj / Искать..." value="${searchQuery}" oninput="searchQuery=this.value;render()">
-      <button class="filter-btn ${filterStatus==='all'?'active':''}" onclick="filterStatus='all';render()">Wszystko</button>
-      <button class="filter-btn ${filterStatus==='new'?'active':''}" onclick="filterStatus='new';render()">Nowe</button>
-      <button class="filter-btn ${filterStatus==='learning'?'active':''}" onclick="filterStatus='learning';render()">Uczenie</button>
-      <button class="filter-btn ${filterStatus==='known'?'active':''}" onclick="filterStatus='known';render()">Znane</button>
+      <input type="text" placeholder="${L().ui.search}" value="${searchQuery}" oninput="searchQuery=this.value;render()">
+      <button class="filter-btn ${filterStatus==='all'?'active':''}" onclick="filterStatus='all';render()">${L().ui.all}</button>
+      <button class="filter-btn ${filterStatus==='new'?'active':''}" onclick="filterStatus='new';render()">${L().ui.nw}</button>
+      <button class="filter-btn ${filterStatus==='learning'?'active':''}" onclick="filterStatus='learning';render()">${L().ui.lr}</button>
+      <button class="filter-btn ${filterStatus==='known'?'active':''}" onclick="filterStatus='known';render()">${L().ui.kn}</button>
     </div>
-    <div style="font-size:.75em;color:var(--text2);margin-bottom:8px">${filtered.length} kart</div>
+    <div style="font-size:.75em;color:var(--text2);margin-bottom:8px">${L().ui.count(filtered.length)}</div>
     <div class="browse-list">`;
 
   filtered.forEach(c => {
     const s=getStatus(c.id);
     const sC=s==='new'?'new':s==='learning'?'learning':'known';
-    const sL=s==='new'?'Nowa':s==='learning'?'Uczenie':'Znana';
+    const sL=s==='new'?L().ui.nowa:s==='learning'?L().ui.uczenie:L().ui.znana;
     const catBadge = c.cat ? `<span style="font-size:.65em;color:var(--accent);opacity:.6;margin-left:6px">${c.cat}</span>` : '';
     html+=`
       <div class="browse-item" onclick="this.querySelector('.detail').style.display=this.querySelector('.detail').style.display==='none'?'block':'none'">
@@ -714,7 +720,7 @@ function renderBrowse() {
 
   html+=`</div>`;
   if(Object.keys(progress).length>0){
-    html+=`<div style="text-align:center;margin-top:16px"><button class="restart-btn" onclick="if(confirm('Сбросить весь прогресс?')){progress={};saveProgress(progress);render()}" style="background:var(--card);border:1px solid var(--red);padding:8px 20px;font-size:.8em">&#x1F5D1; Сбросить прогресс</button></div>`;
+    html+=`<div style="text-align:center;margin-top:16px"><button class="restart-btn" onclick="if(confirm('${L().ui.resetConfirm}')){progress={};saveProgress(progress);render()}" style="background:var(--card);border:1px solid var(--red);padding:8px 20px;font-size:.8em">&#x1F5D1; ${L().ui.reset}</button></div>`;
   }
   return html;
 }
@@ -726,18 +732,18 @@ function renderDone() {
   return `
     <div class="session-done fade-in">
       <div class="emoji">${emoji}</div>
-      <h2>Sesja zakończona!</h2>
-      <p>Пройдено: ${sessionStats.total} &bull; Знаю: ${sessionStats.good} &bull; Трудно: ${sessionStats.hard} &bull; Ещё раз: ${sessionStats.again} &bull; Пропущено: ${sessionStats.skipped}</p>
+      <h2>${L().ui.done}</h2>
+      <p>${L().ui.passed}: ${sessionStats.total} &bull; ${L().ui.know}: ${sessionStats.good} &bull; ${L().ui.hardL}: ${sessionStats.hard} &bull; ${L().ui.againL}: ${sessionStats.again} &bull; ${L().ui.skipped}: ${sessionStats.skipped}</p>
       <div style="margin-bottom:20px">
         <div class="progress-wrap" style="height:10px"><div class="progress-fill" style="width:${pct}%;background:${pct>=80?'var(--green)':pct>=50?'var(--orange)':'var(--red)'}"></div></div>
-        <div style="font-size:.8em;color:var(--text2);margin-top:4px">${rated>0?pct+'% правильных':'Оценок не было'}</div>
+        <div style="font-size:.8em;color:var(--text2);margin-top:4px">${rated>0?pct+'% '+L().ui.correct:L().ui.noRatings}</div>
       </div>
-      <button class="restart-btn" onclick="buildDeck();render()">&#x1F504; Nowa sesja</button>
+      <button class="restart-btn" onclick="buildDeck();render()">&#x1F504; ${L().ui.newSession}</button>
     </div>`;
 }
 
-function setMode(m){currentMode=m;if(m!=='browse')buildDeck();quizAnswer=null;render();}
-function setDir(d){currentDir=d;buildDeck();quizAnswer=null;render();}
+function setMode(m){currentMode=m;if(m!=='browse')buildDeck();quizAnswer=null;quizOptions=null;render();}
+function setDir(d){currentDir=d;buildDeck();quizAnswer=null;quizOptions=null;render();}
 function flipCard(){flipped=!flipped;render();}
 
 function skipCard() {
@@ -776,7 +782,7 @@ function quizSelect(idx,correct) {
   sessionStats.total++;
   render();
 }
-function nextQuiz(){quizAnswer=null;deckIdx++;render();}
+function nextQuiz(){quizAnswer=null;quizOptions=null;deckIdx++;render();}
 
 document.addEventListener('keydown',e=>{
   if(currentMode==='study'){
