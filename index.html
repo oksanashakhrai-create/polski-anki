@@ -585,9 +585,9 @@ function buildDeck() {
   const kn=cc.filter(c=>getStatus(c.id)==='known');
   let pool=[];
   pool.push(...shuffle(lr));
-  pool.push(...shuffle(nw).slice(0,Math.max(25,Math.ceil(nw.length*.4))));
-  pool.push(...shuffle(kn).slice(0,10));
-  if(!pool.length) pool=shuffle([...cc]).slice(0,30);
+  pool.push(...shuffle(nw).slice(0,15));
+  pool.push(...shuffle(kn).slice(0,5));
+  if(!pool.length) pool=shuffle([...cc]).slice(0,20);
   deck=shuffle(pool);
   deckIdx=0; flipped=false;
   sessionStats={total:0,good:0,hard:0,again:0,skipped:0};
