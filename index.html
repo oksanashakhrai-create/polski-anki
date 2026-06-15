@@ -39,8 +39,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .dir-btn{padding:6px 14px;border:2px solid var(--card2);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;font-size:.75em;transition:.2s}
 .dir-btn:hover{border-color:var(--accent)}
 .dir-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.15)}
-.card-container{display:flex;align-items:flex-start;justify-content:center;perspective:1000px;min-height:220px;margin:4px 0;padding-top:8px}
-.flashcard{width:100%;max-width:500px;min-height:220px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
+.card-container{display:flex;align-items:flex-start;justify-content:center;perspective:1000px;margin:4px 0;padding-top:8px}
+.flashcard{width:100%;max-width:500px;min-height:260px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
 .flashcard.flipped{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;padding:14px 20px 20px;text-align:center}
 .card-front{background:linear-gradient(145deg,#1a1a2e,#16213e);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.05)}
@@ -100,8 +100,10 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .stat .num{font-size:1.1em}
   .ans-btn{padding:8px 14px;font-size:.75em;min-width:70px}
   .kbd-hints{display:none}
-  .card-container{min-height:180px;margin:2px 0;padding-top:4px}
-  .flashcard{min-height:180px}
+  .card-container{margin:2px 0;padding-top:4px}
+  .flashcard{min-height:260px}
+  .card-word{font-size:1.15em}
+  .card-example{font-size:.75em}
   .header{padding:4px 0 2px}
   .header h1{font-size:1.4em}
   .progress-wrap{margin:4px 0}
@@ -294,18 +296,18 @@ const CARDS_EN = [
 ["Intentionally controlling","Намеренный (сознательный) контроль","She was intentionally controlling her breathing to stay calm.","Она намеренно контролировала дыхание, чтобы сохранять спокойствие.","General"],
 ["To carry weight","Иметь вес, иметь значение","His opinion carries a lot of weight in this company.","Его мнение имеет большой вес в этой компании.","General"],
 ["To take it a step too far","Зайти слишком далеко","I like his jokes, but this time he took it a step too far.","Мне нравятся его шутки, но в этот раз он зашел слишком далеко.","General"],
-["To keep an eye on","Присматривать за / следить за","Can you keep an eye on my bag while I go to the toilet?","Можешь присмотреть за моей сумкой, пока я схожу в туалет?","General"],
+["To keep an eye on","Следить за чем-то / внимательно наблюдать за чем-то","Can you keep an eye on my bag while I go to the toilet?","Можешь присмотреть за моей сумкой, пока я схожу в туалет?","General"],
 ["How far is it true?","Насколько это правда?","You say you're fine, but how far is it true?","Ты говоришь, что всё хорошо, но насколько это правда?","General"],
 ["To juggle","Жонглировать / совмещать","It's hard to juggle work and family responsibilities.","Трудно совмещать работу и семейные обязанности.","General"],
 ["To pick up on","Усваивать / улавливать","Children pick up on languages much faster than adults.","Дети усваивают языки гораздо быстрее взрослых.","General"],
-["To put your mind to","Сосредоточиться / настроиться на","You can learn anything if you put your mind to it.","Ты можешь выучить что угодно, если по-настоящему настроишься.","General"],
+["To put your mind to","Сосредоточиться на чём-то / приложить усилия к чему-то","You can learn anything if you put your mind to it.","Ты можешь выучить что угодно, если по-настоящему настроишься.","General"],
 ["I found this to be","Я нахожу это / Я считаю, что это","I found the feature to be very helpful for my workflow.","Я нашла эту функцию очень полезной для моей работы.","General"],
 ["There is no harm in + -ing","Нет ничего страшного, чтобы...","There is no harm in testing it before you commit.","Нет ничего страшного в том, чтобы протестировать это перед тем, как решиться.","General"],
 ["To wrap up","Подводить итог / Заканчивать","Wrapping up, I'd like to thank everyone for their attention.","В завершение я хотела бы поблагодарить всех за внимание.","General"],
 ["What does it stand for?","Что это означает? / обозначает?","The letters 'DIY' — what does it stand for?","Буквы 'DIY' — что они означают?","General"],
 ["Scroll (through)","Пролистывать / перелистывать","I like to scroll through my feed on Instagram before bed.","Я люблю пролистывать ленту в Instagram перед сном.","General"],
 ["Whatever it takes","Чего бы это ни стоило / любой ценой","I will finish this project whatever it takes.","Я закончу этот проект чего бы это ни стоило.","General"],
-["Have something figured out","Продумать / разобраться с чем-то","You do NOT need to have everything figured out.","Вам не нужно иметь всё продуманным заранее.","General"],
+["Figured out","Разобраться (понять как работает)","You do NOT need to have everything figured out.","Вам не нужно иметь всё продуманным заранее.","General"],
 ["Same as usual","Как обычно","How was your day? Oh, same as usual.","Как прошёл день? А, как обычно.","General"],
 ["To pull this off","Успешно справиться / провернуть что-то","I can't believe we managed to pull this off!","Не могу поверить, что мы это провернули!","General"],
 ["Blown away","Сильно впечатлён / поражён / в восторге","I was blown away by the results of the campaign.","Я была поражена результатами кампании.","General"],
@@ -322,7 +324,7 @@ const CARDS_EN = [
 ["To let someone in","Впустить кого-то (внутрь)","My friend forgot her keys, so I let her in.","Подруга забыла ключи, и я впустила её.","General"],
 ["To get out of","Выбраться из / выйти из","She got out of the car quickly. How do you get out of difficult situations?","Она быстро вышла из машины. Как ты выбираешься из сложных ситуаций?","General"],
 ["To turn someone down","Отказать кому-то / отвергнуть","She turned him down when he asked her out on a date.","Она отказала ему, когда он пригласил её на свидание.","General"],
-["Screw up my life","Портит мне жизнь","Stop letting negative thoughts screw up your life.","Перестань позволять негативным мыслям портить тебе жизнь.","General"],
+["Screw up my life","Портит мне жизнь (разг)","Stop letting negative thoughts screw up your life.","Перестань позволять негативным мыслям портить тебе жизнь.","General"],
 ["Peacock","Выпендрёжник / пижон","He's such a peacock — always showing off his new clothes.","Он такой пижон — вечно хвастается новой одеждой.","General"],
 ["You seem to + verb","Похоже, ты... / Кажется, что ты...","You seem to enjoy this kind of work a lot.","Похоже, тебе очень нравится такая работа.","General"],
 ["Soaking","Насквозь, до нитки (мокрый)","I got caught in the rain and I'm soaking wet now.","Я попала под дождь и теперь насквозь мокрая.","General"],
@@ -343,11 +345,11 @@ const CARDS_EN = [
 ["Unique perspective","Уникальный ракурс","A unique perspective can change the whole mood of a video.","Уникальный ракурс может изменить всё настроение видео.","Video"],
 ["Minimalist gear","Минимальный набор оборудования","You don't need expensive gear to start making videos.","Не нужно дорогое оборудование, чтобы начать снимать.","Video"],
 ["Extend the tripod","Выдвинуть штатив","Extend the tripod as tall as you can.","Выдвини штатив на максимум.","Video"],
-["Adjust the base","Отрегулировать основу","Adjust the base so the tripod is stable.","Отрегулируй основу, чтобы штатив стоял устойчиво.","Video"],
+["Adjust the base (of a tripod)","Отрегулировать основание / опору штатива","Adjust the base so the tripod is stable.","Отрегулируй основание, чтобы штатив стоял устойчиво.","Video"],
 ["Lock the focus (AF lock)","Зафиксировать фокус","Lock the focus so it doesn't shift during the shot.","Зафиксируй фокус, чтобы он не сбивался во время съёмки.","Video"],
 ["Add depth","Добавить глубину","Using objects in front of the camera adds depth to the shot.","Предметы перед камерой добавляют кадру глубину.","Video"],
 ["Attach camera to the tripod","Прикрепить камеру к штативу","First, attach the camera to the tripod securely.","Сначала надёжно прикрепи камеру к штативу.","Video"],
-["Flip the camera","Переключить камеру / Перевернуть","Flip the camera to switch between front and rear view.","Переключи камеру, чтобы сменить фронтальную на заднюю.","Video"],
+["Flip the camera / Switch the camera","Перевернуть / переключить камеру в другую сторону","Flip the camera to switch between front and rear view.","Переключи камеру, чтобы сменить фронтальную на заднюю.","Video"],
 ["Tilt lock mode","Режим блокировки наклона","Use tilt lock mode to keep the camera steady.","Используй режим блокировки наклона, чтобы камера была стабильной.","Video"],
 ["Adjust the settings","Настроить параметры","Tap on this arrow to adjust the settings.","Нажми на эту стрелку, чтобы настроить параметры.","Video"],
 ["The gimbal has 10 hours of battery life","У стабилизатора 10 часов работы от батареи","The gimbal has 10 hours of battery life and can charge your phone.","У стабилизатора 10 часов работы, и он может заряжать телефон.","Video"],
@@ -412,8 +414,8 @@ const CARDS_EN = [
 ["To release / to let go","Отпускать, освобождать","Slowly release the clutch while pressing the gas.","Медленно отпускай сцепление, нажимая на газ.","Car"],
 ["To release the clutch","Отпустить сцепление","Release the clutch gradually to avoid stalling.","Отпускай сцепление постепенно, чтобы не заглохнуть.","Car"],
 ["Blinker / turn signal","Поворотник","Don't forget to turn on your blinker before turning.","Не забудь включить поворотник перед поворотом.","Car"],
-["Dipped-beam","Ближний свет","Switch to dipped-beam when there's oncoming traffic.","Переключи на ближний свет, когда есть встречный транспорт.","Car"],
-["Main beam","Дальний свет","Use the main beam only when no other cars are around.","Включай дальний свет только когда рядом нет других машин.","Car"],
+["Dipped headlights (Br) / Low beam (Am)","Ближний свет","Switch to dipped headlights when there's oncoming traffic.","Переключи на ближний свет, когда есть встречный транспорт.","Car"],
+["High beam (Am) / Main beam (Br)","Дальний свет","Use the high beam only when no other cars are around.","Включай дальний свет только когда рядом нет других машин.","Car"],
 ["To blind","Ослеплять, слепить","The bright headlights blinded me for a second.","Яркие фары ослепили меня на секунду.","Car"],
 ["Licence plate","Номерной знак","Can you read the licence plate of that car ahead?","Можешь прочитать номерной знак той машины впереди?","Car"],
 ["Exhaust pipe","Выхлопная труба","The exhaust pipe on my car is rusted and needs replacing.","Выхлопная труба на моей машине проржавела и нуждается в замене.","Car"],
@@ -649,6 +651,15 @@ function render() {
   else if(currentMode==='quiz') html+=renderQuiz();
   else html+=renderBrowse();
   app.innerHTML=html;
+  autoSizeCard();
+}
+function autoSizeCard(){
+  const fc=document.getElementById('flashcard');
+  if(!fc) return;
+  const faces=fc.querySelectorAll('.card-face');
+  let max=0;
+  faces.forEach(f=>{f.style.position='relative';max=Math.max(max,f.scrollHeight);f.style.position='';});
+  if(max>0) fc.style.minHeight=max+'px';
 }
 
 function renderStudy() {
