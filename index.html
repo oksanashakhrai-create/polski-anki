@@ -40,9 +40,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .dir-btn:hover{border-color:var(--accent)}
 .dir-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.15)}
 .card-container{display:flex;align-items:flex-start;justify-content:center;perspective:1000px;margin:4px 0;padding-top:8px}
-.flashcard{width:100%;max-width:500px;min-height:420px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
+.flashcard{width:100%;max-width:500px;height:420px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
 .flashcard.flipped{transform:rotateY(180deg)}
-.card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;padding:14px 20px 20px;text-align:center}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;padding:14px 20px 20px;text-align:center;overflow-y:auto}
 .card-front{background:linear-gradient(145deg,#1a1a2e,#16213e);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.05)}
 .card-back{background:linear-gradient(145deg,#16213e,#1a1a2e);box-shadow:var(--shadow);transform:rotateY(180deg);border:1px solid rgba(255,255,255,.05)}
 .card-top-row{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:auto}
@@ -101,7 +101,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .ans-btn{padding:12px 20px;font-size:.85em;min-width:90px}
   .kbd-hints{display:none}
   .card-container{margin:2px 0;padding-top:4px}
-  .flashcard{min-height:380px}
+  .flashcard{height:380px}
   .card-word{font-size:1.7em}
   .card-example{font-size:.95em}
   .header{padding:4px 0 2px}
@@ -271,6 +271,28 @@ const CARDS_PL = [
 ["Zaś","Же / а / в свою очередь","Ja piję czarną kawę, mój mąż zaś woli z mlekiem.","Я пью чёрный кофе, мой муж же предпочитает с молоком.","General"],
 ["Niebawem","Вскоре / скоро","Niebawem otworzą nowy sklep IKEA w naszym mieście.","Вскоре откроют новый магазин IKEA в нашем городе.","General"],
 ["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно.","General"],
+// === Polski ===
+["Obawiać się","Опасаться / страшиться / побаиваться","Obawiam się burzy, więc dzisiaj wieczorem zostanę w domu.","Я боюсь грозы, поэтому сегодня вечером останусь дома.","Polski"],
+["Nie ma się czego obawiać","Нечего бояться / не о чем беспокоиться","Nie ma się czego obawiać — to tylko rutynowe badanie.","Нечего бояться — это просто плановое обследование.","Polski"],
+["Mieć obawy przed","Иметь опасения перед (чем-то) / побаиваться","Zawsze mam pewne obawy przed wizytą u dentysty.","У меня всегда есть опасения перед визитом к стоматологу.","Polski"],
+["Opłacać się","Окупаться / иметь смысл (выгоду)","Kupiłam ten ekspres do kawy na wyprzedaży i to naprawdę mi się opłacało.","Я купила эту кофемашину на распродаже, и это действительно того стоило / окупилось.","Polski"],
+["Wspinać się po","Взбираться / карабкаться / заниматься скалолазанием","Uwielbiam w weekendy jeździć na południe i wspinać się na wysokie szczyty.","Обожаю по выходным ездить на юг и взбираться на высокие вершины.","Polski"],
+["Ścigać","Преследовать / гнаться (физически) / разыскивать","Mój pies uwielbia biegać po lesie i ścigać wiewiórki.","Мой пёс обожает бегать по лесу и гоняться за белками.","Polski"],
+["Ścigać się","Соревноваться / бегать наперегонки (возвратная форма!)","Chłopcy zawsze chcą się ze mną ścigać na basenie.","Мальчики всегда хотят соревноваться со мной в бассейне.","Polski"],
+["Ścigać marzenia","Гнаться за мечтами / преследовать свои мечты","Nie przestawaj ścigać swoich marzeń, nawet gdy jest trudno.","Не переставай гнаться за своими мечтами, даже когда трудно.","Polski"],
+["Oskarżać o (coś)","Обвинять в (чём-то)","Proszę, nie oskarżaj mnie o zgubienie biletów na pociąg, przecież dałam ci je wczoraj.","Пожалуйста, не обвиняй меня в потере билетов на поезд, я ведь отдала их тебе вчера.","Polski"],
+["Oskarżenie","Обвинение","Oskarżenie było bezpodstawne i sąd je odrzucił.","Обвинение было безосновательным, и суд его отклонил.","Polski"],
+["Być skazanym na (coś / kogoś)","Быть обречённым на (что-то / кого-то) — Biernik: na kogo? na co?","Nasz lot odwołali, więc jesteśmy skazani na nocleg w hotelu przy lotnisku.","Наш рейс отменили, поэтому мы обречены на ночёвку в отеле при аэропорте.","Polski"],
+["Skazać","Осудить / приговорить / обречь","Sąd skazał go na dwa lata więzienia.","Суд приговорил его к двум годам тюрьмы.","Polski"],
+["Wycofać się z (czegoś)","Отказаться от (чего-то) / выйти из (планов) — Dopełniacz: z czego?","Moja siostra wycofała się z naszego wspólnego wyjazdu do Grecji, więc muszę lecieć sama.","Моя сестра отказалась от нашей совместной поездки в Грецию, поэтому мне придётся лететь одной.","Polski"],
+["Wycofać","Сдать назад / выехать задом (физическое действие, БЕЗ się)","Czy możesz trochę wycofać, żebym mogła wyjechać z parkingu?","Можешь немного сдать назад, чтобы я могла выехать с парковки?","Polski"],
+["Przecinające się ścieżki","Пересекающиеся дорожки / тропинки","Nasze ścieżki się przecinają.","Наши пути пересекаются.","Polski"],
+["Ściągnąć na siebie uwagę","Привлечь к себе внимание","Jej głośny śmiech od razu ściągnął na nią uwagę całej sali.","Её громкий смех сразу привлёк к ней внимание всего зала.","Polski"],
+["Zagłada","Гибель / уничтожение / погибель","W tym filmie superbohaterowie muszą uratować świat przed całkowitą zagładą.","В этом фильме супергерои должны спасти мир от полного уничтожения.","Polski"],
+["Zarzucać (komuś coś)","Обвинять / упрекать","Szef zarzuca mi brak zaangażowania.","Шеф упрекает меня в недостатке вовлечённости.","Polski"],
+["Dążyć do (celu)","Стремиться к (цели)","Konsekwentnie dążę do swojego celu.","Я последовательно стремлюсь к своей цели.","Polski"],
+["Zastosować się do (zasad / warunków)","Соблюдать / подчиниться (правилам / условиям)","Wszyscy pracownicy muszą zastosować się do nowych procedur.","Все сотрудники должны соблюдать новые процедуры.","Polski"],
+["Wkurzyć się (na maksa)","Взбеситься / сильно разозлиться (разг.)","Wkurzyłam się na maksa, bo klient znowu przedłuża akceptację wideo.","Я дико разозлилась, потому что клиент снова затягивает с утверждением видео.","Polski"],
 ];
 
 // ============ ENGLISH CARDS ============
@@ -302,7 +324,7 @@ const CARDS_EN = [
 ["To pick up on","Усваивать / улавливать","Children pick up on languages much faster than adults.","Дети усваивают языки гораздо быстрее взрослых.","General"],
 ["To put your mind to","Сосредоточиться на чём-то / приложить усилия к чему-то","You can learn anything if you put your mind to it.","Ты можешь выучить что угодно, если по-настоящему настроишься.","General"],
 ["I found this to be","Я нахожу это / Я считаю, что это","I found the feature to be very helpful for my workflow.","Я нашла эту функцию очень полезной для моей работы.","General"],
-["There is no harm in + -ing","Нет ничего страшного, чтобы...","There is no harm in testing it before you commit.","Нет ничего страшного в том, чтобы протестировать это перед тем, как решиться.","General"],
+["There is no harm in + -ing","Нет ничего плохого в том, чтобы","There is no harm in testing it before you commit.","Нет ничего плохого в том, чтобы протестировать это перед тем, как решиться.","General"],
 ["To wrap up","Подводить итог / Заканчивать","Wrapping up, I'd like to thank everyone for their attention.","В завершение я хотела бы поблагодарить всех за внимание.","General"],
 ["What does it stand for?","Что это означает? / обозначает?","The letters 'DIY' — what does it stand for?","Буквы 'DIY' — что они означают?","General"],
 ["Scroll (through)","Пролистывать / перелистывать","I like to scroll through my feed on Instagram before bed.","Я люблю пролистывать ленту в Instagram перед сном.","General"],
@@ -319,7 +341,7 @@ const CARDS_EN = [
 ["To go on a trip","Отправиться в поездку","We want to go on a trip to the mountains next summer.","Мы хотим отправиться в поездку в горы следующим летом.","General"],
 ["I'm shattered","Я вымотался / без сил","After working for ten hours, I'm completely shattered.","После десяти часов работы я совершенно без сил.","General"],
 ["Not pleased with","Недоволен чем-то","My boss was not pleased with my report and asked me to rewrite it.","Мой босс был недоволен отчётом и попросил переписать его.","General"],
-["Steps aside / step to the side","Отойти в сторону / шагнуть в сторону","Could you step to the side, please? I need to get through.","Не могли бы вы отойти в сторону? Мне нужно пройти.","General"],
+["Step aside / step to the side","Отойти в сторону / шагнуть в сторону","Could you step to the side, please? I need to get through.","Не могли бы вы отойти в сторону? Мне нужно пройти.","General"],
 ["To let someone through","Пропустить кого-то (пройти)","The corridor was narrow, but I let the old woman through.","Коридор был узким, но я пропустила пожилую женщину.","General"],
 ["To let someone in","Впустить кого-то (внутрь)","My friend forgot her keys, so I let her in.","Подруга забыла ключи, и я впустила её.","General"],
 ["To get out of","Выбраться из / выйти из","She got out of the car quickly. How do you get out of difficult situations?","Она быстро вышла из машины. Как ты выбираешься из сложных ситуаций?","General"],
@@ -343,7 +365,7 @@ const CARDS_EN = [
 ["Handheld","Съёмка с рук","Some scenes feel more natural when shot handheld.","Некоторые сцены выглядят более естественно при съёмке с рук.","Video"],
 ["Stand out","Выделяться","These angles really help your videos stand out from others.","Эти ракурсы действительно помогают твоим видео выделяться.","Video"],
 ["Unique perspective","Уникальный ракурс","A unique perspective can change the whole mood of a video.","Уникальный ракурс может изменить всё настроение видео.","Video"],
-["Minimalist gear","Минимальный набор оборудования","You don't need expensive gear to start making videos.","Не нужно дорогое оборудование, чтобы начать снимать.","Video"],
+["Minimal gear setup","Минимальный набор оборудования","You don't need expensive gear to start making videos.","Не нужно дорогое оборудование, чтобы начать снимать.","Video"],
 ["Extend the tripod","Выдвинуть штатив","Extend the tripod as tall as you can.","Выдвини штатив на максимум.","Video"],
 ["Adjust the base (of a tripod)","Отрегулировать основание / опору штатива","Adjust the base so the tripod is stable.","Отрегулируй основание, чтобы штатив стоял устойчиво.","Video"],
 ["Lock the focus (AF lock)","Зафиксировать фокус","Lock the focus so it doesn't shift during the shot.","Зафиксируй фокус, чтобы он не сбивался во время съёмки.","Video"],
@@ -399,7 +421,7 @@ const CARDS_EN = [
 ["To ignite","Зажигать","Turn the key to ignite the engine.","Поверни ключ, чтобы завести двигатель.","Car"],
 ["Ignition","Зажигание","Put the key in the ignition and turn it clockwise.","Вставь ключ в зажигание и поверни по часовой стрелке.","Car"],
 ["Gas pedal","Педаль газа","Gently press the gas pedal to accelerate.","Мягко нажми на педаль газа, чтобы ускориться.","Car"],
-["To mistake","Путать","She mistook the gas pedal for the brake.","Она перепутала педаль газа с тормозом.","Car"],
+["Mixed up","Перепутать","She mixed up the gas pedal and the brake.","Она перепутала педаль газа и тормоз.","Car"],
 ["She mistook the pedals","Она перепутала педали","She mistook the pedals and hit the car in front.","Она перепутала педали и врезалась в машину впереди.","Car"],
 ["Her car was damaged","Её машина была повреждена","Her car was damaged in the parking lot accident.","Её машина была повреждена в аварии на парковке.","Car"],
 ["No people were injured/hurt","Никто не пострадал","Luckily, no people were injured in the accident.","К счастью, никто не пострадал в аварии.","Car"],
@@ -451,7 +473,7 @@ const CARDS_EN = [
 ["A flooded section of road","Затопленный участок дороги","A flooded section of the road forced us to take a detour.","Затопленный участок дороги заставил нас ехать в объезд.","Car"],
 ["Brake pedal","Педаль тормоза","Press the brake pedal gently when approaching a red light.","Плавно нажми педаль тормоза при приближении к красному свету.","Car"],
 ["Clutch pedal","Педаль сцепления","Press the clutch pedal before shifting gears.","Нажми педаль сцепления перед переключением передач.","Car"],
-["Severe","Свирепый, жёсткий","Severe weather conditions can make driving dangerous.","Суровые погодные условия делают вождение опасным.","Car"],
+["Severe /sɪˈvɪə/","Свирепый, жёсткий","Severe weather conditions can make driving dangerous.","Суровые погодные условия делают вождение опасным.","Car"],
 // === Фразы связки ===
 ["Let me clarify","Позвольте мне пояснить / уточнить","Let me clarify — I didn't mean it that way at all.","Позвольте уточнить — я совсем не это имел в виду.","General"],
 ["That way","Таким образом / благодаря этому","Save your file often. That way, you won't lose your work.","Сохраняй файл чаще. Таким образом, ты не потеряешь работу.","General"],
@@ -660,14 +682,7 @@ function render() {
   app.innerHTML=html;
   autoSizeCard();
 }
-function autoSizeCard(){
-  const fc=document.getElementById('flashcard');
-  if(!fc) return;
-  const faces=fc.querySelectorAll('.card-face');
-  let max=0;
-  faces.forEach(f=>{f.style.position='relative';max=Math.max(max,f.scrollHeight);f.style.position='';});
-  if(max>0) fc.style.minHeight=max+'px';
-}
+function autoSizeCard(){}
 
 function renderStudy() {
   if(!deck.length) buildDeck();
