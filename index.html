@@ -40,7 +40,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .dir-btn:hover{border-color:var(--accent)}
 .dir-btn.active{border-color:var(--accent);color:var(--text);background:rgba(233,69,96,.15)}
 .card-container{display:flex;align-items:flex-start;justify-content:center;perspective:1000px;margin:4px 0;padding-top:8px}
-.flashcard{width:100%;max-width:500px;height:420px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
+.flashcard{width:100%;max-width:500px;height:350px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1)}
 .flashcard.flipped{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;padding:14px 20px 20px;text-align:center;overflow-y:auto}
 .card-front{background:linear-gradient(145deg,#1a1a2e,#16213e);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.05)}
@@ -49,9 +49,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .card-category{font-size:.65em;color:var(--accent);text-transform:uppercase;letter-spacing:1px;opacity:.7}
 .card-counter{font-size:.7em;color:var(--text2)}
 .card-content{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1}
-.card-word{font-size:2.1em;font-weight:600;line-height:1.4;margin-bottom:8px}
-.card-hint{font-size:1em;color:var(--text2);margin-top:8px;font-style:italic}
-.card-example{font-size:1.1em;color:var(--text2);margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);line-height:1.5;max-width:100%}
+.card-word{font-size:1.75em;font-weight:600;line-height:1.35;margin-bottom:6px}
+.card-hint{font-size:.85em;color:var(--text2);margin-top:6px;font-style:italic}
+.card-example{font-size:.92em;color:var(--text2);margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);line-height:1.5;max-width:100%}
 .card-example strong{color:var(--text);font-weight:500}
 .tap-hint{position:absolute;bottom:16px;font-size:.7em;color:var(--text2);opacity:.5}
 .bottom-bar{display:flex;gap:10px;margin:8px 0 4px;justify-content:center;align-items:center;flex-wrap:wrap}
@@ -101,9 +101,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   .ans-btn{padding:12px 20px;font-size:.85em;min-width:90px}
   .kbd-hints{display:none}
   .card-container{margin:2px 0;padding-top:4px}
-  .flashcard{height:380px}
-  .card-word{font-size:1.7em}
-  .card-example{font-size:.95em}
+  .flashcard{height:320px}
+  .card-word{font-size:1.4em}
+  .card-example{font-size:.8em}
   .header{padding:4px 0 2px}
   .header h1{font-size:1.4em}
   .progress-wrap{margin:4px 0}
@@ -272,27 +272,27 @@ const CARDS_PL = [
 ["Niebawem","Вскоре / скоро","Niebawem otworzą nowy sklep IKEA w naszym mieście.","Вскоре откроют новый магазин IKEA в нашем городе.","General"],
 ["Perfidny uwodziciel","Коварный соблазнитель","Okazał się perfidnym uwodzicielem — pisał do trzech dziewczyn naraz.","Он оказался коварным соблазнителем — писал трём девушкам одновременно.","General"],
 // === Polski ===
-["Obawiać się","Опасаться / страшиться / побаиваться","Obawiam się burzy, więc dzisiaj wieczorem zostanę w domu.","Я боюсь грозы, поэтому сегодня вечером останусь дома.","Polski"],
-["Nie ma się czego obawiać","Нечего бояться / не о чем беспокоиться","Nie ma się czego obawiać — to tylko rutynowe badanie.","Нечего бояться — это просто плановое обследование.","Polski"],
-["Mieć obawy przed","Иметь опасения перед (чем-то) / побаиваться","Zawsze mam pewne obawy przed wizytą u dentysty.","У меня всегда есть опасения перед визитом к стоматологу.","Polski"],
-["Opłacać się","Окупаться / иметь смысл (выгоду)","Kupiłam ten ekspres do kawy na wyprzedaży i to naprawdę mi się opłacało.","Я купила эту кофемашину на распродаже, и это действительно того стоило / окупилось.","Polski"],
-["Wspinać się po","Взбираться / карабкаться / заниматься скалолазанием","Uwielbiam w weekendy jeździć na południe i wspinać się na wysokie szczyty.","Обожаю по выходным ездить на юг и взбираться на высокие вершины.","Polski"],
-["Ścigać","Преследовать / гнаться (физически) / разыскивать","Mój pies uwielbia biegać po lesie i ścigać wiewiórki.","Мой пёс обожает бегать по лесу и гоняться за белками.","Polski"],
-["Ścigać się","Соревноваться / бегать наперегонки (возвратная форма!)","Chłopcy zawsze chcą się ze mną ścigać na basenie.","Мальчики всегда хотят соревноваться со мной в бассейне.","Polski"],
-["Ścigać marzenia","Гнаться за мечтами / преследовать свои мечты","Nie przestawaj ścigać swoich marzeń, nawet gdy jest trudno.","Не переставай гнаться за своими мечтами, даже когда трудно.","Polski"],
-["Oskarżać o (coś)","Обвинять в (чём-то)","Proszę, nie oskarżaj mnie o zgubienie biletów na pociąg, przecież dałam ci je wczoraj.","Пожалуйста, не обвиняй меня в потере билетов на поезд, я ведь отдала их тебе вчера.","Polski"],
-["Oskarżenie","Обвинение","Oskarżenie było bezpodstawne i sąd je odrzucił.","Обвинение было безосновательным, и суд его отклонил.","Polski"],
-["Być skazanym na (coś / kogoś)","Быть обречённым на (что-то / кого-то) — Biernik: na kogo? na co?","Nasz lot odwołali, więc jesteśmy skazani na nocleg w hotelu przy lotnisku.","Наш рейс отменили, поэтому мы обречены на ночёвку в отеле при аэропорте.","Polski"],
-["Skazać","Осудить / приговорить / обречь","Sąd skazał go na dwa lata więzienia.","Суд приговорил его к двум годам тюрьмы.","Polski"],
-["Wycofać się z (czegoś)","Отказаться от (чего-то) / выйти из (планов) — Dopełniacz: z czego?","Moja siostra wycofała się z naszego wspólnego wyjazdu do Grecji, więc muszę lecieć sama.","Моя сестра отказалась от нашей совместной поездки в Грецию, поэтому мне придётся лететь одной.","Polski"],
-["Wycofać","Сдать назад / выехать задом (физическое действие, БЕЗ się)","Czy możesz trochę wycofać, żebym mogła wyjechać z parkingu?","Можешь немного сдать назад, чтобы я могла выехать с парковки?","Polski"],
-["Przecinające się ścieżki","Пересекающиеся дорожки / тропинки","Nasze ścieżki się przecinają.","Наши пути пересекаются.","Polski"],
-["Ściągnąć na siebie uwagę","Привлечь к себе внимание","Jej głośny śmiech od razu ściągnął na nią uwagę całej sali.","Её громкий смех сразу привлёк к ней внимание всего зала.","Polski"],
-["Zagłada","Гибель / уничтожение / погибель","W tym filmie superbohaterowie muszą uratować świat przed całkowitą zagładą.","В этом фильме супергерои должны спасти мир от полного уничтожения.","Polski"],
-["Zarzucać (komuś coś)","Обвинять / упрекать","Szef zarzuca mi brak zaangażowania.","Шеф упрекает меня в недостатке вовлечённости.","Polski"],
-["Dążyć do (celu)","Стремиться к (цели)","Konsekwentnie dążę do swojego celu.","Я последовательно стремлюсь к своей цели.","Polski"],
-["Zastosować się do (zasad / warunków)","Соблюдать / подчиниться (правилам / условиям)","Wszyscy pracownicy muszą zastosować się do nowych procedur.","Все сотрудники должны соблюдать новые процедуры.","Polski"],
-["Wkurzyć się (na maksa)","Взбеситься / сильно разозлиться (разг.)","Wkurzyłam się na maksa, bo klient znowu przedłuża akceptację wideo.","Я дико разозлилась, потому что клиент снова затягивает с утверждением видео.","Polski"],
+["Obawiać się","Опасаться / страшиться / побаиваться","Obawiam się burzy, więc dzisiaj wieczorem zostanę w domu.","Я боюсь грозы, поэтому сегодня вечером останусь дома.","General"],
+["Nie ma się czego obawiać","Нечего бояться / не о чем беспокоиться","Nie ma się czego obawiać — to tylko rutynowe badanie.","Нечего бояться — это просто плановое обследование.","General"],
+["Mieć obawy przed","Иметь опасения перед (чем-то) / побаиваться","Zawsze mam pewne obawy przed wizytą u dentysty.","У меня всегда есть опасения перед визитом к стоматологу.","General"],
+["Opłacać się","Окупаться / иметь смысл (выгоду)","Kupiłam ten ekspres do kawy na wyprzedaży i to naprawdę mi się opłacało.","Я купила эту кофемашину на распродаже, и это действительно того стоило / окупилось.","General"],
+["Wspinać się po","Взбираться / карабкаться / заниматься скалолазанием","Uwielbiam w weekendy jeździć na południe i wspinać się na wysokie szczyty.","Обожаю по выходным ездить на юг и взбираться на высокие вершины.","General"],
+["Ścigać","Преследовать / гнаться (физически) / разыскивать","Mój pies uwielbia biegać po lesie i ścigać wiewiórki.","Мой пёс обожает бегать по лесу и гоняться за белками.","General"],
+["Ścigać się","Соревноваться / бегать наперегонки (возвратная форма!)","Chłopcy zawsze chcą się ze mną ścigać na basenie.","Мальчики всегда хотят соревноваться со мной в бассейне.","General"],
+["Ścigać marzenia","Гнаться за мечтами / преследовать свои мечты","Nie przestawaj ścigać swoich marzeń, nawet gdy jest trudno.","Не переставай гнаться за своими мечтами, даже когда трудно.","General"],
+["Oskarżać o (coś)","Обвинять в (чём-то)","Proszę, nie oskarżaj mnie o zgubienie biletów na pociąg, przecież dałam ci je wczoraj.","Пожалуйста, не обвиняй меня в потере билетов на поезд, я ведь отдала их тебе вчера.","General"],
+["Oskarżenie","Обвинение","Oskarżenie było bezpodstawne i sąd je odrzucił.","Обвинение было безосновательным, и суд его отклонил.","General"],
+["Być skazanym na (coś / kogoś)","Быть обречённым на (что-то / кого-то) — Biernik: na kogo? na co?","Nasz lot odwołali, więc jesteśmy skazani na nocleg w hotelu przy lotnisku.","Наш рейс отменили, поэтому мы обречены на ночёвку в отеле при аэропорте.","General"],
+["Skazać","Осудить / приговорить / обречь","Sąd skazał go na dwa lata więzienia.","Суд приговорил его к двум годам тюрьмы.","General"],
+["Wycofać się z (czegoś)","Отказаться от (чего-то) / выйти из (планов) — Dopełniacz: z czego?","Moja siostra wycofała się z naszego wspólnego wyjazdu do Grecji, więc muszę lecieć sama.","Моя сестра отказалась от нашей совместной поездки в Грецию, поэтому мне придётся лететь одной.","General"],
+["Wycofać","Сдать назад / выехать задом (физическое действие, БЕЗ się)","Czy możesz trochę wycofać, żebym mogła wyjechać z parkingu?","Можешь немного сдать назад, чтобы я могла выехать с парковки?","General"],
+["Przecinające się ścieżki","Пересекающиеся дорожки / тропинки","Nasze ścieżki się przecinają.","Наши пути пересекаются.","General"],
+["Ściągnąć na siebie uwagę","Привлечь к себе внимание","Jej głośny śmiech od razu ściągnął na nią uwagę całej sali.","Её громкий смех сразу привлёк к ней внимание всего зала.","General"],
+["Zagłada","Гибель / уничтожение / погибель","W tym filmie superbohaterowie muszą uratować świat przed całkowitą zagładą.","В этом фильме супергерои должны спасти мир от полного уничтожения.","General"],
+["Zarzucać (komuś coś)","Обвинять / упрекать","Szef zarzuca mi brak zaangażowania.","Шеф упрекает меня в недостатке вовлечённости.","General"],
+["Dążyć do (celu)","Стремиться к (цели)","Konsekwentnie dążę do swojego celu.","Я последовательно стремлюсь к своей цели.","General"],
+["Zastosować się do (zasad / warunków)","Соблюдать / подчиниться (правилам / условиям)","Wszyscy pracownicy muszą zastosować się do nowych procedur.","Все сотрудники должны соблюдать новые процедуры.","General"],
+["Wkurzyć się (na maksa)","Взбеситься / сильно разозлиться (разг.)","Wkurzyłam się na maksa, bo klient znowu przedłuża akceptację wideo.","Я дико разозлилась, потому что клиент снова затягивает с утверждением видео.","General"],
 ];
 
 // ============ ENGLISH CARDS ============
